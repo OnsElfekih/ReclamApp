@@ -1,25 +1,26 @@
 package projet.elfekih.ons.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity
 @Table(name = "AgentsSAV")
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class AgentSAV {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
-	@Column(nullable = false, unique = true, length = 25)
-	@NotBlank(message = "Le nom est obligatoire")
+    @NotEmpty(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100)
+    @Column(nullable = false, length = 100)
 	private String nom;
 	
-	@NotEmpty(message = "La compétence est obligatoire")
-	private String competence;
+    @NotEmpty(message = "La compétence est obligatoire")
+    @Column(nullable = false, length = 200)
+    private String competence;
 
 }

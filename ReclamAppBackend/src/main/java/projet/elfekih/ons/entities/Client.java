@@ -3,28 +3,30 @@ package projet.elfekih.ons.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
+
 @Entity
 @Table(name = "Clients")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+
 public class Client {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
-	@Column(nullable = false, unique = true, length = 25)
-	@NotBlank(message = "Le nom est obligatoire")
+    @NotEmpty(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100, message = "Le nom doit contenir entre 2 et 100 caractères")
+    @Column(nullable = false, length = 100)
 	private String nom;
 	
-	@NotBlank(message = "L'email est obligatoire")
-	@Email(message = "Format email invalide")
-	@Column(nullable = false, unique = true, length = 50)
+    @NotEmpty(message = "L'email est obligatoire")
+    @Email(message = "Format email invalide")
+    @Column(nullable = false, length = 100, unique = true)
 	private String email;
 	
-	@NotBlank(message = "Le telephone est obligatoire")
-	@Pattern(regexp = "^[0-9]{8}$", message = "Téléphone doit contenir 8 chiffres")
+    @Pattern(regexp = "^[0-9]{8}$", message = "Le téléphone doit contenir 8 chiffres")
+    @Column(length = 8)
 	private String telephone;
 	
 }

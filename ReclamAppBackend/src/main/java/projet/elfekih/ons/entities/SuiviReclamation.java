@@ -8,24 +8,26 @@ import lombok.*;
 @Entity
 @Table(name = "SuiviReclamations")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
+
 public class SuiviReclamation {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	
-	@NotBlank(message = "Le message est obligatoire")
-	private String message;
+    @NotEmpty(message = "Le message est obligatoire")
+    @Column(nullable = false, length = 500)
+    private String message;
+    
+    @Column(length = 200)
+    private String action;
 	
-	private String action;
-	
-	@Builder.Default
-	private LocalDateTime dateSuivi = LocalDateTime.now();
-	
+    @Column(name = "date_suivi")
+    private LocalDateTime date = LocalDateTime.now();
+    
 	@ManyToOne
-	@JoinColumn(name="idReclamation")
+	@JoinColumn(name="idReclamation",nullable=false)
 	private Reclamation reclamation;
 	
 	@ManyToOne
