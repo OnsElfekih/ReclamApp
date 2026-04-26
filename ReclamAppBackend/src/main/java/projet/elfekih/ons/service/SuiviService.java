@@ -20,10 +20,16 @@ public class SuiviService {
         return suiviRepository.findByReclamationId(reclamationId);
     }
     public SuiviReclamation save(SuiviReclamation suivi) {
-        // Vérifier que la réclamation existe
-        reclamationRepository.findById(suivi.getReclamation().getId())
+        Reclamation reclamation = reclamationRepository.findById(suivi.getReclamation().getId())
             .orElseThrow(() -> new RuntimeException("Réclamation introuvable"));
+
+        AgentSAV agent = agentRepository.findById(suivi.getAgentSAV().getId())
+            .orElseThrow(() -> new RuntimeException("Agent introuvable"));
+
+        suivi.setReclamation(reclamation);
+        suivi.setAgentSAV(agent);
         suivi.setDate(java.time.LocalDateTime.now());
+
         return suiviRepository.save(suivi);
     }
 

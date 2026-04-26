@@ -10,7 +10,7 @@ import projet.elfekih.ons.repository.AgentSAVRepository;
 
 @Service
 @RequiredArgsConstructor
-public class AgentService {
+public class AgentSAVService {
 	private final AgentSAVRepository agentRepository;
 	
     public List<AgentSAV> findAll() {

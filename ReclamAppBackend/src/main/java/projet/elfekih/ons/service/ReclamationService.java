@@ -20,6 +20,10 @@ public class ReclamationService {
     public List<Reclamation> findAll() {
 		return reclamationRepository.findAll();
 	}
+    public Reclamation findById(Long id) {
+        return reclamationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Réclamation introuvable, id=" + id));
+    }
     public List<Reclamation> findByStatut(StatutReclamation statut) {
         return reclamationRepository.findByStatut(statut);
     }
@@ -27,20 +31,34 @@ public class ReclamationService {
     public List<Reclamation> findByClientId(Long clientId) {
         return reclamationRepository.findByClientId(clientId);
     }
+    
     public Reclamation save(Reclamation reclamation) {
-        // Vérifier que le client existe
-        clientRepository.findById(reclamation.getClient().getId())
+        Client client = clientRepository.findById(reclamation.getClient().getId())
             .orElseThrow(() -> new RuntimeException("Client introuvable"));
+
+        reclamation.setClient(client);
         reclamation.setStatut(StatutReclamation.OUVERTE);
         reclamation.setDate(java.time.LocalDate.now());
+
         return reclamationRepository.save(reclamation);
     }
+    
     public Reclamation update(Long id, Reclamation reclamation) {
-        reclamationRepository.findById(id)
+        Reclamation existing = reclamationRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Réclamation introuvable, id=" + id));
-        reclamation.setId(id);
-        return reclamationRepository.save(reclamation);
+
+        Client client = clientRepository.findById(reclamation.getClient().getId())
+            .orElseThrow(() -> new RuntimeException("Client introuvable"));
+
+        existing.setClient(client);
+        existing.setProduit(reclamation.getProduit());
+        existing.setDescription(reclamation.getDescription());
+        existing.setStatut(reclamation.getStatut());
+        existing.setNote(reclamation.getNote());
+
+        return reclamationRepository.save(existing);
     }
+    
     // Affectation d'un agent — statut passe à EN_COURS
     public Reclamation affecter(Long reclamationId, Long agentId) {
         Reclamation r = reclamationRepository.findById(reclamationId)

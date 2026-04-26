@@ -29,9 +29,9 @@ public class Reclamation {
     @Column(nullable = false, length = 20)
     private StatutReclamation statut = StatutReclamation.OUVERTE;
 
-    @Min(value = 1, message = "Note minimale : 1")
+    @Min(value = 0, message = "Note minimale : 0")
     @Max(value = 5, message = "Note maximale : 5")
-	private int note;
+    private Integer note;
     
     @Column(name = "date_reclamation")
     private LocalDate date = LocalDate.now();
