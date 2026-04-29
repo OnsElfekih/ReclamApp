@@ -1,0 +1,25 @@
+<div class="container mt-4">
+  <h3>Liste des clients</h3>
+
+  <p>Nombre de clients : {{ clients.length }}</p>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{ client.id }}</td>
+        <td>{{ client.nom }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.telephone }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
