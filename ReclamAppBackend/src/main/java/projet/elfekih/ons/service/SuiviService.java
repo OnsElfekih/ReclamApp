@@ -15,6 +15,10 @@ public class SuiviService {
     private ReclamationRepository reclamationRepository;
 	@Autowired
     private AgentSAVRepository agentRepository;
+	
+    public List<SuiviReclamation> findAll() {
+        return suiviRepository.findAll();
+    }
 
     public List<SuiviReclamation> findByReclamationId(Long reclamationId) {
         return suiviRepository.findByReclamationId(reclamationId);

@@ -47,6 +47,11 @@ public class SuiviController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    @GetMapping
+    public ResponseEntity<List<SuiviReclamation>> findAll() {
+        return ResponseEntity.ok(suiviService.findAll());
+    }
 
 
 }
