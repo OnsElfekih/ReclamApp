@@ -1,9 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SuiviService } from '../../core/services/suivi.service';
+import { Suivi } from '../../core/models/suivi.model';
 
 @Component({
   selector: 'app-rapport',
-  imports: [],
-  templateUrl: './rapport.html',
-  styleUrl: './rapport.css',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './rapport.html'
 })
-export class Rapport {}
+export class Rapport implements OnInit {
+
+  suivis: Suivi[] = [];
+
+  constructor(
+    private suiviService: SuiviService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.suiviService.findAll().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.suivis = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+}

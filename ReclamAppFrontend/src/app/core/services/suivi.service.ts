@@ -8,6 +8,9 @@ export class SuiviService {
   private url = 'http://localhost:9090/api/suivis';
   constructor(private http: HttpClient) {}
 
+    findAll(): Observable<Suivi[]> {
+      return this.http.get<Suivi[]>(this.url);
+    }
   findByReclamation(id: number): Observable<Suivi[]> {
     return this.http.get<Suivi[]>(`${this.url}/reclamation/${id}`);
   }
