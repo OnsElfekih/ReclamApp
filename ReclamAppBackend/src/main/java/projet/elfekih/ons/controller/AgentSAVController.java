@@ -2,19 +2,19 @@ package projet.elfekih.ons.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import projet.elfekih.ons.entities.AgentSAV;
 import projet.elfekih.ons.service.AgentSAVService;
 
 @RestController
 @RequestMapping("/api/agents")
 @CrossOrigin(origins = "http://localhost:4200")
-@RequiredArgsConstructor
 public class AgentSAVController {
-	private final AgentSAVService agentService;
+	@Autowired
+	private AgentSAVService agentService;
 	 @GetMapping
 	    public ResponseEntity<List<AgentSAV>> findAll() {
 	        return ResponseEntity.ok(agentService.findAll());

@@ -2,17 +2,16 @@ package projet.elfekih.ons.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
 import projet.elfekih.ons.entities.Client;
 import projet.elfekih.ons.repository.ClientRepository;
 
 
 @Service
-@RequiredArgsConstructor
 public class ClientService {
-	private final ClientRepository clientRepository;
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	public List<Client> findAll() {
 		return clientRepository.findAll();

@@ -4,18 +4,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
 import projet.elfekih.ons.repository.*;
 import projet.elfekih.ons.entities.*;
 
 @Service
-@RequiredArgsConstructor
 public class ReclamationService {
-    private final ReclamationRepository reclamationRepository;
-    private final ClientRepository clientRepository;
-    private final AgentSAVRepository agentRepository;
+	@Autowired
+    private ReclamationRepository reclamationRepository;
+	@Autowired
+    private ClientRepository clientRepository;
+	@Autowired
+    private AgentSAVRepository agentRepository;
     
     public List<Reclamation> findAll() {
 		return reclamationRepository.findAll();

@@ -2,6 +2,7 @@ package projet.elfekih.ons.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +12,14 @@ import lombok.*;
 import projet.elfekih.ons.entities.Client;
 import projet.elfekih.ons.service.ClientService;
 
-//@RestController = @Controller + @ResponseBody — retourne du JSON
-//@CrossOrigin — autorise Angular (localhost:4200) à appeler ce controller
+
 @RestController
 @RequestMapping("/api/clients")
 @CrossOrigin(origins = "http://localhost:4200")
-@RequiredArgsConstructor
+
 public class ClientController {
-	private final ClientService clientService;
+	@Autowired
+	private  ClientService clientService;
 	@GetMapping("/{id}")
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
         try {
@@ -28,7 +29,6 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-	// POST /api/clients — @Valid active les annotations de validation — cours page 39
     @PostMapping
     public ResponseEntity<Client> save(@Valid @RequestBody Client client) {
         // Vérifier email unique

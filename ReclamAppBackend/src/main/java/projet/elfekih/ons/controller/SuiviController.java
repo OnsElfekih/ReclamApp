@@ -1,19 +1,20 @@
 package projet.elfekih.ons.controller;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import projet.elfekih.ons.entities.SuiviReclamation;
 import projet.elfekih.ons.service.SuiviService;
 
 @RestController
 @RequestMapping("/api/suivis")
 @CrossOrigin(origins = "http://localhost:4200")
-@RequiredArgsConstructor
 public class SuiviController {
-    private final SuiviService suiviService;
+	@Autowired
+    private SuiviService suiviService;
 
     // GET /api/suivis/reclamation/{reclamationId}
     @GetMapping("/reclamation/{reclamationId}")
