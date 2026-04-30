@@ -5,11 +5,20 @@ export type StatutReclamation = 'OUVERTE' | 'EN_COURS' | 'RESOLUE' | 'FERMEE';
 
 export interface Reclamation {
   id?: number;
-  client: Client;
+  client: {
+    id: number;
+    nom: string;
+    email: string;
+    telephone: string;
+  };
   produit: string;
-  statut?: StatutReclamation;
+  statut: string;
   description: string;
-  date?: string;
-  note?: number | null;
-  agentSAV?: Agent | null;
+  date: string;
+  note?: number;
+  agentSAV?: {
+    id: number;
+    nom: string;
+    competence: string;
+  } | null;
 }
