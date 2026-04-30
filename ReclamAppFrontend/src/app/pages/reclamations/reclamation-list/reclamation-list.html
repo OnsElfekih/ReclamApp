@@ -1,1 +1,29 @@
-<p>reclamation-list works!</p>
+<div class="container mt-4">
+  <h3>Liste des réclamations</h3>
+
+  <p>Nombre : {{ reclamations.length }}</p>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Produit</th>
+        <th>Statut</th>
+        <th>Description</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let r of reclamations">
+        <td>{{ r.id }}</td>
+        <td>{{ r.client.nom }}</td>
+        <td>{{ r.produit }}</td>
+        <td>{{ r.statut }}</td>
+        <td>{{ r.description }}</td>
+        <td>{{ r.date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

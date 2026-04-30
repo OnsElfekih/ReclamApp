@@ -5,7 +5,7 @@ import { Reclamation, StatutReclamation } from '../models/reclamation.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReclamationService {
-  private url = 'http://localhost:9090/reclamations';
+  private url = 'http://localhost:9090/api/reclamations';
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<Reclamation[]> {
