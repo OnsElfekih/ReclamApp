@@ -29,15 +29,11 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping
-    public ResponseEntity<Client> save(@Valid @RequestBody Client client) {
-        // Vérifier email unique
-        if (clientService.existsByEmail(client.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-        Client saved = clientService.save(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-    }
+	@PostMapping
+	public ResponseEntity<Client> save(@Valid @RequestBody Client client) {
+	    Client saved = clientService.save(client);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+	}
  // PUT /api/clients/{id}
     @PutMapping("/{id}")
     public ResponseEntity<Client> update(

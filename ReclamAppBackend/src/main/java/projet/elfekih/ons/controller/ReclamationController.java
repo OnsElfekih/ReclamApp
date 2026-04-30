@@ -1,6 +1,8 @@
 package projet.elfekih.ons.controller;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,9 @@ import projet.elfekih.ons.service.ReclamationService;
 @RestController
 @RequestMapping("/api/reclamations")
 @CrossOrigin(origins = "http://localhost:4200")
-@RequiredArgsConstructor
 public class ReclamationController {
-	private final ReclamationService reclamationService;
+	@Autowired
+	private ReclamationService reclamationService;
 	
 	// GET /api/reclamations
     // GET /api/reclamations?statut=OUVERTE  — filtrage optionnel par statut
