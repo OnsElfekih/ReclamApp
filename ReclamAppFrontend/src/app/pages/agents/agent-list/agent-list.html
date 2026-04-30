@@ -1,1 +1,23 @@
-<p>agent-list works!</p>
+<div class="container mt-4">
+  <h3>Liste des agents SAV</h3>
+
+  <p>Nombre : {{ agents.length }}</p>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Compétence</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let agent of agents">
+        <td>{{ agent.id }}</td>
+        <td>{{ agent.nom }}</td>
+        <td>{{ agent.competence }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
