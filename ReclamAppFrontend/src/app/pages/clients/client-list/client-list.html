@@ -45,11 +45,27 @@
 
           <button
             class="btn btn-danger btn-sm"
-            (click)="deleteClient(client.id!)">
+            (click)="confirmDeleteClient(client.id!)">
             Supprimer
           </button>
         </td>
       </tr>
     </tbody>
   </table>
+  <div *ngIf="clientToDelete" class="alert alert-warning d-flex justify-content-between align-items-center">
+      <span>
+        Confirmer la suppression du client
+        <strong>{{ clients.find(c => c.id === clientToDelete)?.nom }}</strong> ?
+      </span>
+
+      <div>
+        <button class="btn btn-danger btn-sm me-2" (click)="deleteClient()">
+          Oui
+        </button>
+
+        <button class="btn btn-secondary btn-sm" (click)="clientToDelete = undefined">
+          Annuler
+        </button>
+      </div>
+  </div>
 </div>

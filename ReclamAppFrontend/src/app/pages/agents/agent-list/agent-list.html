@@ -43,11 +43,27 @@
 
           <button
             class="btn btn-danger btn-sm"
-            (click)="deleteAgent(agent.id!)">
+            (click)="confirmDeleteAgent(agent.id!)">
             Supprimer
           </button>
         </td>
       </tr>
     </tbody>
   </table>
+  <div *ngIf="agentToDelete" class="alert alert-warning d-flex justify-content-between align-items-center">
+        <span>
+        Confirmer la suppression de l'agent
+        <strong>{{ agents.find(a => a.id === agentToDelete)?.nom }}</strong> ?
+      </span>
+
+  <div>
+    <button class="btn btn-danger btn-sm me-2" (click)="deleteAgent()">
+      Oui
+    </button>
+
+    <button class="btn btn-secondary btn-sm" (click)="agentToDelete = undefined">
+      Annuler
+    </button>
+  </div>
+</div>
 </div>

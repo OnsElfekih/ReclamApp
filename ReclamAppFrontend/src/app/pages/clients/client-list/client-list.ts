@@ -14,6 +14,7 @@ import { Client } from '../../../core/models/client.model';
 })
 export class ClientList implements OnInit {
 
+  clientToDelete?: number;
   clients: Client[] = [];
   keyword = '';
   error = '';
@@ -66,18 +67,16 @@ export class ClientList implements OnInit {
   editClient(id: number): void {
     this.router.navigate(['/clients/modifier', id]);
   }
+  confirmDeleteClient(id: number): void {
+  this.clientToDelete = id;
+}
 
-  deleteClient(id: number): void {
-    if (confirm('Voulez-vous supprimer ce client ?')) {
-      this.clientService.delete(id).subscribe({
-        next: () => {
-          this.loadClients();
-        },
-        error: () => {
-          this.error = 'Erreur lors de la suppression du client';
-          this.cdr.detectChanges();
-        }
-      });
-    }
+deleteClient(): void {
+  if (this.clientToDelete) {
+    this.clientService.delete(this.clientToDelete).subscribe(() => {
+      this.loadClients();
+      this.clientToDelete = undefined;
+    });
   }
+}
 }

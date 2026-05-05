@@ -13,7 +13,7 @@ import { Agent } from '../../../core/models/agent.model';
   templateUrl: './agent-list.html'
 })
 export class AgentList implements OnInit {
-
+  agentToDelete?: number;
   agents: Agent[] = [];
   keyword = '';
   error = '';
@@ -66,18 +66,16 @@ export class AgentList implements OnInit {
   editAgent(id: number): void {
     this.router.navigate(['/agents/modifier', id]);
   }
+  confirmDeleteAgent(id: number): void {
+  this.agentToDelete = id;
+}
 
-  deleteAgent(id: number): void {
-    if (confirm('Voulez-vous supprimer cet agent ?')) {
-      this.agentService.delete(id).subscribe({
-        next: () => {
-          this.loadAgents();
-        },
-        error: () => {
-          this.error = 'Erreur lors de la suppression de l’agent';
-          this.cdr.detectChanges();
-        }
-      });
-    }
+deleteAgent(): void {
+  if (this.agentToDelete) {
+    this.agentService.delete(this.agentToDelete).subscribe(() => {
+      this.loadAgents();
+      this.agentToDelete = undefined;
+    });
   }
+}
 }
