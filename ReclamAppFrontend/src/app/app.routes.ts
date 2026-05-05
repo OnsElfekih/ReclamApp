@@ -51,13 +51,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'reclamations/:id',
-    loadComponent: () =>
-      import('./pages/reclamations/reclamation-detail/reclamation-detail').then(
-        (m) => m.ReclamationDetail,
-      ),
-  },
-  {
     path: 'rapport',
     loadComponent: () => import('./pages/rapport/rapport').then((m) => m.Rapport),
   },

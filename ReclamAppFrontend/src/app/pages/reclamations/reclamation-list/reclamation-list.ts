@@ -13,10 +13,9 @@ import { Agent } from '../../../core/models/agent.model';
   selector: 'app-reclamation-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './reclamation-list.html'
+  templateUrl: './reclamation-list.html',
 })
 export class ReclamationList implements OnInit {
-
   reclamations: any[] = [];
   agents: Agent[] = [];
 
@@ -33,7 +32,7 @@ export class ReclamationList implements OnInit {
     private reclamationService: ReclamationService,
     private agentService: AgentService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +51,7 @@ export class ReclamationList implements OnInit {
       error: () => {
         this.error = 'Erreur de récupération des réclamations';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -65,7 +64,7 @@ export class ReclamationList implements OnInit {
       error: () => {
         this.error = 'Erreur de récupération des agents';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -93,7 +92,7 @@ export class ReclamationList implements OnInit {
         this.error = 'Erreur lors de la suppression';
         this.cancelDelete();
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -124,7 +123,7 @@ export class ReclamationList implements OnInit {
         error: () => {
           this.error = 'Erreur lors de la recherche';
           this.cdr.detectChanges();
-        }
+        },
       });
   }
 
@@ -142,7 +141,7 @@ export class ReclamationList implements OnInit {
       error: () => {
         this.error = 'Erreur lors de l’affectation';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 }

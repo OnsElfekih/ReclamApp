@@ -10,13 +10,12 @@ import { Agent } from '../../../core/models/agent.model';
   selector: 'app-agent-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './agent-form.html'
+  templateUrl: './agent-form.html',
 })
 export class AgentForm implements OnInit {
-
   agent: Agent = {
     nom: '',
-    competence: ''
+    competence: '',
   };
 
   id!: number;
@@ -27,11 +26,11 @@ export class AgentForm implements OnInit {
     private agentService: AgentService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
 
       if (idParam) {
@@ -48,7 +47,7 @@ export class AgentForm implements OnInit {
         this.agent = {
           id: data.id,
           nom: data.nom,
-          competence: data.competence
+          competence: data.competence,
         };
 
         this.cdr.detectChanges();
@@ -56,7 +55,7 @@ export class AgentForm implements OnInit {
       error: () => {
         this.error = 'Agent introuvable';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -69,7 +68,7 @@ export class AgentForm implements OnInit {
         error: () => {
           this.error = 'Erreur lors de la modification de l’agent';
           this.cdr.detectChanges();
-        }
+        },
       });
     } else {
       this.agentService.save(this.agent).subscribe({
@@ -79,7 +78,7 @@ export class AgentForm implements OnInit {
         error: () => {
           this.error = 'Erreur lors de l’ajout de l’agent';
           this.cdr.detectChanges();
-        }
+        },
       });
     }
   }

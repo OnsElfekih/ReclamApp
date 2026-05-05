@@ -10,10 +10,9 @@ import { Client } from '../../../core/models/client.model';
   selector: 'app-client-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './client-list.html'
+  templateUrl: './client-list.html',
 })
 export class ClientList implements OnInit {
-
   clientToDelete?: number;
   clients: Client[] = [];
   keyword = '';
@@ -22,7 +21,7 @@ export class ClientList implements OnInit {
   constructor(
     private clientService: ClientService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -38,27 +37,27 @@ export class ClientList implements OnInit {
       error: () => {
         this.error = 'Erreur de récupération des clients';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
   onSearchChange(): void {
-  if (this.keyword.trim() === '') {
-    this.loadClients();
-    return;
-  }
-
-  this.clientService.search(this.keyword).subscribe({
-    next: (data) => {
-      this.clients = data;
-      this.cdr.detectChanges();
-    },
-    error: () => {
-      this.error = 'Erreur lors de la recherche';
-      this.cdr.detectChanges();
+    if (this.keyword.trim() === '') {
+      this.loadClients();
+      return;
     }
-  });
-}
+
+    this.clientService.search(this.keyword).subscribe({
+      next: (data) => {
+        this.clients = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.error = 'Erreur lors de la recherche';
+        this.cdr.detectChanges();
+      },
+    });
+  }
 
   addClient(): void {
     this.router.navigate(['/clients/nouveau']);
@@ -68,15 +67,15 @@ export class ClientList implements OnInit {
     this.router.navigate(['/clients/modifier', id]);
   }
   confirmDeleteClient(id: number): void {
-  this.clientToDelete = id;
-}
-
-deleteClient(): void {
-  if (this.clientToDelete) {
-    this.clientService.delete(this.clientToDelete).subscribe(() => {
-      this.loadClients();
-      this.clientToDelete = undefined;
-    });
+    this.clientToDelete = id;
   }
-}
+
+  deleteClient(): void {
+    if (this.clientToDelete) {
+      this.clientService.delete(this.clientToDelete).subscribe(() => {
+        this.loadClients();
+        this.clientToDelete = undefined;
+      });
+    }
+  }
 }

@@ -3,16 +3,15 @@
 
   <p>Nombre d'agents : {{ agents.length }}</p>
 
-  <button class="btn btn-primary mb-3" (click)="addAgent()">
-    Ajouter agent
-  </button>
+  <button class="btn btn-primary mb-3" (click)="addAgent()">Ajouter agent</button>
 
   <input
     type="text"
     class="form-control mb-3"
     placeholder="Rechercher par nom"
     [(ngModel)]="keyword"
-    (input)="onSearchChange()">
+    (input)="onSearchChange()"
+  />
 
   <p class="text-danger" *ngIf="error">
     {{ error }}
@@ -35,35 +34,30 @@
         <td>{{ agent.competence }}</td>
 
         <td>
-          <button
-            class="btn btn-warning btn-sm me-2"
-            (click)="editAgent(agent.id!)">
+          <button class="btn btn-warning btn-sm me-2" (click)="editAgent(agent.id!)">
             Modifier
           </button>
 
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="confirmDeleteAgent(agent.id!)">
+          <button class="btn btn-danger btn-sm" (click)="confirmDeleteAgent(agent.id!)">
             Supprimer
           </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div *ngIf="agentToDelete" class="alert alert-warning d-flex justify-content-between align-items-center">
-        <span>
-        Confirmer la suppression de l'agent
-        <strong>{{ agents.find(a => a.id === agentToDelete)?.nom }}</strong> ?
-      </span>
+  <div
+    *ngIf="agentToDelete"
+    class="alert alert-warning d-flex justify-content-between align-items-center"
+  >
+    <span>
+      Confirmer la suppression de l'agent
+      <strong>{{ agents.find((a) => a.id === agentToDelete)?.nom }}</strong> ?
+    </span>
 
-  <div>
-    <button class="btn btn-danger btn-sm me-2" (click)="deleteAgent()">
-      Oui
-    </button>
+    <div>
+      <button class="btn btn-danger btn-sm me-2" (click)="deleteAgent()">Oui</button>
 
-    <button class="btn btn-secondary btn-sm" (click)="agentToDelete = undefined">
-      Annuler
-    </button>
+      <button class="btn btn-secondary btn-sm" (click)="agentToDelete = undefined">Annuler</button>
+    </div>
   </div>
-</div>
 </div>

@@ -7,7 +7,6 @@
   </p>
 
   <form #agentForm="ngForm" (ngSubmit)="saveAgent()">
-
     <div class="mb-3">
       <label class="form-label">Nom</label>
       <input
@@ -17,55 +16,44 @@
         [(ngModel)]="agent.nom"
         #nom="ngModel"
         required
-        minlength="3">
+        minlength="3"
+      />
 
       <div class="text-danger" *ngIf="nom.invalid && nom.touched">
-        <small *ngIf="nom.errors?.['required']">
-          Le nom est obligatoire.
-        </small>
+        <small *ngIf="nom.errors?.['required']"> Le nom est obligatoire. </small>
         <small *ngIf="nom.errors?.['minlength']">
           Le nom doit contenir au moins 3 caractères.
         </small>
       </div>
     </div>
     <div class="mb-3">
-  <label class="form-label">Compétence</label>
-  <input
-    type="text"
-    class="form-control"
-    name="competence"
-    [(ngModel)]="agent.competence"
-    #competence="ngModel"
-    required
-    minlength="3"
-    pattern="^[A-Za-zÀ-ÿ\s]+$">
+      <label class="form-label">Compétence</label>
+      <input
+        type="text"
+        class="form-control"
+        name="competence"
+        [(ngModel)]="agent.competence"
+        #competence="ngModel"
+        required
+        minlength="3"
+        pattern="^[A-Za-zÀ-ÿ\s]+$"
+      />
 
-  <div class="text-danger" *ngIf="competence.invalid && competence.touched">
-    <small *ngIf="competence.errors?.['required']">
-      La compétence est obligatoire.
-    </small>
+      <div class="text-danger" *ngIf="competence.invalid && competence.touched">
+        <small *ngIf="competence.errors?.['required']"> La compétence est obligatoire. </small>
 
-    <small *ngIf="competence.errors?.['minlength']">
-      Minimum 3 caractères.
-    </small>
+        <small *ngIf="competence.errors?.['minlength']"> Minimum 3 caractères. </small>
 
-    <small *ngIf="competence.errors?.['pattern']">
-      La compétence doit contenir uniquement du texte.
-    </small>
-  </div>
-</div>
-    
+        <small *ngIf="competence.errors?.['pattern']">
+          La compétence doit contenir uniquement du texte.
+        </small>
+      </div>
+    </div>
 
-    <button
-      type="submit"
-      class="btn btn-success me-2"
-      [disabled]="agentForm.invalid">
+    <button type="submit" class="btn btn-success me-2" [disabled]="agentForm.invalid">
       Enregistrer
     </button>
 
-    <button type="button" class="btn btn-secondary" (click)="cancel()">
-      Annuler
-    </button>
-
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
   </form>
 </div>

@@ -10,14 +10,13 @@ import { Client } from '../../../core/models/client.model';
   selector: 'app-client-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './client-form.html'
+  templateUrl: './client-form.html',
 })
 export class ClientForm implements OnInit {
-
   client: Client = {
     nom: '',
     email: '',
-    telephone: ''
+    telephone: '',
   };
 
   id!: number;
@@ -28,11 +27,11 @@ export class ClientForm implements OnInit {
     private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
 
       if (idParam) {
@@ -50,7 +49,7 @@ export class ClientForm implements OnInit {
           id: data.id,
           nom: data.nom,
           email: data.email,
-          telephone: data.telephone
+          telephone: data.telephone,
         };
 
         this.cdr.detectChanges();
@@ -58,7 +57,7 @@ export class ClientForm implements OnInit {
       error: () => {
         this.error = 'Client introuvable';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -71,7 +70,7 @@ export class ClientForm implements OnInit {
         error: () => {
           this.error = 'Erreur lors de la modification du client';
           this.cdr.detectChanges();
-        }
+        },
       });
     } else {
       this.clientService.save(this.client).subscribe({
@@ -81,7 +80,7 @@ export class ClientForm implements OnInit {
         error: () => {
           this.error = 'Erreur lors de l’ajout du client';
           this.cdr.detectChanges();
-        }
+        },
       });
     }
   }

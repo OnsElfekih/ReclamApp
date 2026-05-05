@@ -3,52 +3,43 @@
 
   <p>Nombre : {{ reclamations.length }}</p>
 
-  <button class="btn btn-primary mb-3" (click)="addReclamation()">
-    Ajouter réclamation
-  </button>
+  <button class="btn btn-primary mb-3" (click)="addReclamation()">Ajouter réclamation</button>
 
   <div class="row mb-3">
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nom agent"
+        [(ngModel)]="agentNom"
+        (input)="onSearchChange()"
+      />
+    </div>
 
-  <div class="col-md-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Nom agent"
-      [(ngModel)]="agentNom"
-      (input)="onSearchChange()">
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nom client"
+        [(ngModel)]="clientNom"
+        (input)="onSearchChange()"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <select class="form-control" [(ngModel)]="statut" (change)="onSearchChange()">
+        <option value="">Statut</option>
+        <option value="OUVERTE">OUVERTE</option>
+        <option value="EN_COURS">EN_COURS</option>
+        <option value="RESOLUE">RESOLUE</option>
+        <option value="FERMEE">FERMEE</option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <input type="date" class="form-control" [(ngModel)]="date" (change)="onSearchChange()" />
+    </div>
   </div>
-
-  <div class="col-md-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Nom client"
-      [(ngModel)]="clientNom"
-      (input)="onSearchChange()">
-  </div>
-
-  <div class="col-md-3">
-    <select
-      class="form-control"
-      [(ngModel)]="statut"
-      (change)="onSearchChange()">
-      <option value="">Statut</option>
-      <option value="OUVERTE">OUVERTE</option>
-      <option value="EN_COURS">EN_COURS</option>
-      <option value="RESOLUE">RESOLUE</option>
-      <option value="FERMEE">FERMEE</option>
-    </select>
-  </div>
-
-  <div class="col-md-3">
-    <input
-      type="date"
-      class="form-control"
-      [(ngModel)]="date"
-      (change)="onSearchChange()">
-  </div>
-
-</div>
 
   <p class="text-danger" *ngIf="error">
     {{ error }}
@@ -56,21 +47,17 @@
 
   <div
     *ngIf="reclamationToDelete"
-    class="alert alert-warning d-flex justify-content-between align-items-center">
-
+    class="alert alert-warning d-flex justify-content-between align-items-center"
+  >
     <span>
       Confirmer la suppression de la réclamation
       <strong>{{ reclamationToDelete.produit }}</strong> ?
     </span>
 
     <div>
-      <button class="btn btn-danger btn-sm me-2" (click)="deleteReclamation()">
-        Oui
-      </button>
+      <button class="btn btn-danger btn-sm me-2" (click)="deleteReclamation()">Oui</button>
 
-      <button class="btn btn-secondary btn-sm" (click)="cancelDelete()">
-        Annuler
-      </button>
+      <button class="btn btn-secondary btn-sm" (click)="cancelDelete()">Annuler</button>
     </div>
   </div>
 
@@ -100,36 +87,25 @@
         <td>{{ r.date }}</td>
 
         <td>
-          <select
-            class="form-control form-control-sm"
-            [(ngModel)]="r.selectedAgentId">
-
-            <option [ngValue]="undefined">
-              Choisir agent
-            </option>
+          <select class="form-control form-control-sm" [(ngModel)]="r.selectedAgentId">
+            <option [ngValue]="undefined">Choisir agent</option>
 
             <option *ngFor="let agent of agents" [ngValue]="agent.id">
               {{ agent.nom }}
             </option>
           </select>
 
-          <button
-            class="btn btn-info btn-sm mt-2"
-            (click)="affecterAgent(r.id, r.selectedAgentId)">
+          <button class="btn btn-info btn-sm mt-2" (click)="affecterAgent(r.id, r.selectedAgentId)">
             Affecter
           </button>
         </td>
 
         <td>
-          <button
-            class="btn btn-warning btn-sm me-2"
-            (click)="editReclamation(r.id)">
+          <button class="btn btn-warning btn-sm me-2" (click)="editReclamation(r.id)">
             Modifier
           </button>
 
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="confirmDeleteReclamation(r)">
+          <button class="btn btn-danger btn-sm" (click)="confirmDeleteReclamation(r)">
             Supprimer
           </button>
         </td>

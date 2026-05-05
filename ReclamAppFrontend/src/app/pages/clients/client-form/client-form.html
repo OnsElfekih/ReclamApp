@@ -7,7 +7,6 @@
   </p>
 
   <form #clientForm="ngForm" (ngSubmit)="saveClient()">
-
     <div class="mb-3">
       <label class="form-label">Nom</label>
       <input
@@ -17,12 +16,11 @@
         [(ngModel)]="client.nom"
         #nom="ngModel"
         required
-        minlength="3">
+        minlength="3"
+      />
 
       <div class="text-danger" *ngIf="nom.invalid && nom.touched">
-        <small *ngIf="nom.errors?.['required']">
-          Le nom est obligatoire.
-        </small>
+        <small *ngIf="nom.errors?.['required']"> Le nom est obligatoire. </small>
         <small *ngIf="nom.errors?.['minlength']">
           Le nom doit contenir au moins 3 caractères.
         </small>
@@ -38,15 +36,12 @@
         [(ngModel)]="client.email"
         #email="ngModel"
         required
-        email>
+        email
+      />
 
       <div class="text-danger" *ngIf="email.invalid && email.touched">
-        <small *ngIf="email.errors?.['required']">
-          L'email est obligatoire.
-        </small>
-        <small *ngIf="email.errors?.['email']">
-          Format email invalide.
-        </small>
+        <small *ngIf="email.errors?.['required']"> L'email est obligatoire. </small>
+        <small *ngIf="email.errors?.['email']"> Format email invalide. </small>
       </div>
     </div>
 
@@ -59,28 +54,21 @@
         [(ngModel)]="client.telephone"
         #telephone="ngModel"
         required
-        pattern="^[0-9]{8}$">
+        pattern="^[0-9]{8}$"
+      />
 
       <div class="text-danger" *ngIf="telephone.invalid && telephone.touched">
-        <small *ngIf="telephone.errors?.['required']">
-          Le téléphone est obligatoire.
-        </small>
+        <small *ngIf="telephone.errors?.['required']"> Le téléphone est obligatoire. </small>
         <small *ngIf="telephone.errors?.['pattern']">
           Le téléphone doit contenir exactement 8 chiffres.
         </small>
       </div>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-success me-2"
-      [disabled]="clientForm.invalid">
+    <button type="submit" class="btn btn-success me-2" [disabled]="clientForm.invalid">
       Enregistrer
     </button>
 
-    <button type="button" class="btn btn-secondary" (click)="cancel()">
-      Annuler
-    </button>
-
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
   </form>
 </div>

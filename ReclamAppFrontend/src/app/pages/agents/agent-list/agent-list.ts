@@ -10,7 +10,7 @@ import { Agent } from '../../../core/models/agent.model';
   selector: 'app-agent-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './agent-list.html'
+  templateUrl: './agent-list.html',
 })
 export class AgentList implements OnInit {
   agentToDelete?: number;
@@ -21,7 +21,7 @@ export class AgentList implements OnInit {
   constructor(
     private agentService: AgentService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class AgentList implements OnInit {
       error: () => {
         this.error = 'Erreur de récupération des agents';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -55,7 +55,7 @@ export class AgentList implements OnInit {
       error: () => {
         this.error = 'Erreur lors de la recherche';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -67,15 +67,15 @@ export class AgentList implements OnInit {
     this.router.navigate(['/agents/modifier', id]);
   }
   confirmDeleteAgent(id: number): void {
-  this.agentToDelete = id;
-}
-
-deleteAgent(): void {
-  if (this.agentToDelete) {
-    this.agentService.delete(this.agentToDelete).subscribe(() => {
-      this.loadAgents();
-      this.agentToDelete = undefined;
-    });
+    this.agentToDelete = id;
   }
-}
+
+  deleteAgent(): void {
+    if (this.agentToDelete) {
+      this.agentService.delete(this.agentToDelete).subscribe(() => {
+        this.loadAgents();
+        this.agentToDelete = undefined;
+      });
+    }
+  }
 }

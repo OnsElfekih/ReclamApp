@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule,DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SuiviService } from '../../core/services/suivi.service';
 import { Suivi } from '../../core/models/suivi.model';
 
@@ -7,15 +7,14 @@ import { Suivi } from '../../core/models/suivi.model';
   selector: 'app-rapport',
   standalone: true,
   imports: [CommonModule, DatePipe],
-  templateUrl: './rapport.html'
+  templateUrl: './rapport.html',
 })
 export class Rapport implements OnInit {
-
   suivis: Suivi[] = [];
 
   constructor(
     private suiviService: SuiviService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +24,7 @@ export class Rapport implements OnInit {
         this.suivis = data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
 }
