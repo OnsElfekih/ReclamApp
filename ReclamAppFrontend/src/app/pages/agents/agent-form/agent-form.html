@@ -6,7 +6,7 @@
     {{ error }}
   </p>
 
-  <form (ngSubmit)="saveAgent()">
+  <form #agentForm="ngForm" (ngSubmit)="saveAgent()">
 
     <div class="mb-3">
       <label class="form-label">Nom</label>
@@ -15,20 +15,51 @@
         class="form-control"
         name="nom"
         [(ngModel)]="agent.nom"
-        required>
-    </div>
+        #nom="ngModel"
+        required
+        minlength="3">
 
+      <div class="text-danger" *ngIf="nom.invalid && nom.touched">
+        <small *ngIf="nom.errors?.['required']">
+          Le nom est obligatoire.
+        </small>
+        <small *ngIf="nom.errors?.['minlength']">
+          Le nom doit contenir au moins 3 caractères.
+        </small>
+      </div>
+    </div>
     <div class="mb-3">
-      <label class="form-label">Compétence</label>
-      <input
-        type="text"
-        class="form-control"
-        name="competence"
-        [(ngModel)]="agent.competence"
-        required>
-    </div>
+  <label class="form-label">Compétence</label>
+  <input
+    type="text"
+    class="form-control"
+    name="competence"
+    [(ngModel)]="agent.competence"
+    #competence="ngModel"
+    required
+    minlength="3"
+    pattern="^[A-Za-zÀ-ÿ\s]+$">
 
-    <button type="submit" class="btn btn-success me-2">
+  <div class="text-danger" *ngIf="competence.invalid && competence.touched">
+    <small *ngIf="competence.errors?.['required']">
+      La compétence est obligatoire.
+    </small>
+
+    <small *ngIf="competence.errors?.['minlength']">
+      Minimum 3 caractères.
+    </small>
+
+    <small *ngIf="competence.errors?.['pattern']">
+      La compétence doit contenir uniquement du texte.
+    </small>
+  </div>
+</div>
+    
+
+    <button
+      type="submit"
+      class="btn btn-success me-2"
+      [disabled]="agentForm.invalid">
       Enregistrer
     </button>
 
