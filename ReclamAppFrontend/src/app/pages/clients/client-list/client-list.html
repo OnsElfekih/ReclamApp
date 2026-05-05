@@ -7,6 +7,13 @@
     Ajouter client
   </button>
 
+  <input
+  type="text"
+  class="form-control mb-3"
+  placeholder="Rechercher par nom"
+  [(ngModel)]="keyword"
+  (input)="onSearchChange()">
+
   <p class="text-danger" *ngIf="error">
     {{ error }}
   </p>

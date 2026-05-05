@@ -23,4 +23,7 @@ export class ClientService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
+  search(keyword: string): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.url}/search?keyword=${keyword}`);
+  }
 }

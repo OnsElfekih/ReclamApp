@@ -59,4 +59,7 @@ public class ClientService {
                 "Client introuvable avec email=" + email
             ));
     }
+    public List<Client> search(String keyword) {
+        return clientRepository.findByNomContainingIgnoreCase(keyword);
+    }
 }

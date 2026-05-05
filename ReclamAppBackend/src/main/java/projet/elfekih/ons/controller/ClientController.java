@@ -60,4 +60,8 @@ public class ClientController {
     public ResponseEntity<List<Client>> findAll() {
         return ResponseEntity.ok(clientService.findAll());
     }
+    @GetMapping("/search")
+    public List<Client> search(@RequestParam String keyword) {
+        return clientService.search(keyword);
+    }
 }
