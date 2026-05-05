@@ -1,1 +1,69 @@
-<p>reclamation-form works!</p>
+<div class="container mt-4">
+  <h3 *ngIf="!isEditMode">Ajouter réclamation</h3>
+  <h3 *ngIf="isEditMode">Modifier réclamation</h3>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <form #reclamationForm="ngForm" (ngSubmit)="saveReclamation()">
+    <div class="mb-3">
+      <label class="form-label">Client</label>
+
+      <select class="form-control" name="clientId" [(ngModel)]="reclamation.client.id" required>
+        <option [ngValue]="null">Choisir un client</option>
+
+        <option *ngFor="let client of clients" [ngValue]="client.id">
+          {{ client.nom }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Produit</label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="produit"
+        [(ngModel)]="reclamation.produit"
+        required
+        minlength="2"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+
+      <textarea
+        class="form-control"
+        name="description"
+        rows="4"
+        [(ngModel)]="reclamation.description"
+        required
+        minlength="5"
+      >
+      </textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Note</label>
+
+      <select class="form-control" name="note" [(ngModel)]="reclamation.note" required>
+        <option [ngValue]="null">Choisir une note</option>
+
+        <option [ngValue]="0">0 - Très mauvaise</option>
+        <option [ngValue]="1">1 - Mauvaise</option>
+        <option [ngValue]="2">2 - Passable</option>
+        <option [ngValue]="3">3 - Moyenne</option>
+        <option [ngValue]="4">4 - Bonne</option>
+        <option [ngValue]="5">5 - Excellente</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success me-2" [disabled]="reclamationForm.invalid">
+      Enregistrer
+    </button>
+
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+  </form>
+</div>
