@@ -3,6 +3,14 @@
 
   <p>Nombre de clients : {{ clients.length }}</p>
 
+  <button class="btn btn-primary mb-3" (click)="addClient()">
+    Ajouter client
+  </button>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -10,6 +18,7 @@
         <th>Nom</th>
         <th>Email</th>
         <th>Téléphone</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -19,6 +28,20 @@
         <td>{{ client.nom }}</td>
         <td>{{ client.email }}</td>
         <td>{{ client.telephone }}</td>
+
+        <td>
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editClient(client.id!)">
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteClient(client.id!)">
+            Supprimer
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

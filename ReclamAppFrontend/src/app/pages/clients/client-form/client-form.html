@@ -1,1 +1,50 @@
-<p>client-form works!</p>
+<div class="container mt-4">
+  <h3 *ngIf="!isEditMode">Ajouter client</h3>
+  <h3 *ngIf="isEditMode">Modifier client</h3>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <form (ngSubmit)="saveClient()">
+
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input
+        type="text"
+        class="form-control"
+        name="nom"
+        [(ngModel)]="client.nom"
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        [(ngModel)]="client.email"
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Téléphone</label>
+      <input
+        type="text"
+        class="form-control"
+        name="telephone"
+        [(ngModel)]="client.telephone"
+        required>
+    </div>
+
+    <button type="submit" class="btn btn-success me-2">
+      Enregistrer
+    </button>
+
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      Annuler
+    </button>
+
+  </form>
+</div>

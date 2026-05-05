@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
 import { ClientService } from '../../../core/services/client.service';
 import { Client } from '../../../core/models/client.model';
 
@@ -16,23 +18,46 @@ export class ClientList implements OnInit {
 
   constructor(
     private clientService: ClientService,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    console.log('Début appel API');
+    this.loadClients();
+  }
 
+  loadClients(): void {
     this.clientService.findAll().subscribe({
       next: (data) => {
-        console.log('Données reçues :', data);
         this.clients = data;
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Erreur API :', err);
+      error: () => {
         this.error = 'Erreur de récupération des clients';
         this.cdr.detectChanges();
       }
     });
+  }
+
+  addClient(): void {
+    this.router.navigate(['/clients/nouveau']);
+  }
+
+  editClient(id: number): void {
+    this.router.navigate(['/clients/modifier', id]);
+  }
+
+  deleteClient(id: number): void {
+    if (confirm('Voulez-vous supprimer ce client ?')) {
+      this.clientService.delete(id).subscribe({
+        next: () => {
+          this.loadClients();
+        },
+        error: () => {
+          this.error = 'Erreur lors de la suppression du client';
+          this.cdr.detectChanges();
+        }
+      });
+    }
   }
 }
