@@ -47,4 +47,7 @@ public class AgentSAVService {
             ));
         agentRepository.deleteById(id);
     }
+    public List<AgentSAV> search(String keyword) {
+        return agentRepository.findByNomContainingIgnoreCase(keyword);
+    }
 }

@@ -1,7 +1,22 @@
 <div class="container mt-4">
-  <h3>Liste des agents SAV</h3>
+  <h3>Liste des agents</h3>
 
-  <p>Nombre : {{ agents.length }}</p>
+  <p>Nombre d'agents : {{ agents.length }}</p>
+
+  <button class="btn btn-primary mb-3" (click)="addAgent()">
+    Ajouter agent
+  </button>
+
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Rechercher par nom"
+    [(ngModel)]="keyword"
+    (input)="onSearchChange()">
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
 
   <table class="table table-bordered">
     <thead>
@@ -9,6 +24,7 @@
         <th>ID</th>
         <th>Nom</th>
         <th>Compétence</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -17,6 +33,20 @@
         <td>{{ agent.id }}</td>
         <td>{{ agent.nom }}</td>
         <td>{{ agent.competence }}</td>
+
+        <td>
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editAgent(agent.id!)">
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteAgent(agent.id!)">
+            Supprimer
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

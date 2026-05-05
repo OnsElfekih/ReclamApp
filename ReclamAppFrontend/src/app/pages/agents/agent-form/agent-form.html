@@ -1,1 +1,40 @@
-<p>agent-form works!</p>
+<div class="container mt-4">
+  <h3 *ngIf="!isEditMode">Ajouter agent</h3>
+  <h3 *ngIf="isEditMode">Modifier agent</h3>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <form (ngSubmit)="saveAgent()">
+
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input
+        type="text"
+        class="form-control"
+        name="nom"
+        [(ngModel)]="agent.nom"
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Compétence</label>
+      <input
+        type="text"
+        class="form-control"
+        name="competence"
+        [(ngModel)]="agent.competence"
+        required>
+    </div>
+
+    <button type="submit" class="btn btn-success me-2">
+      Enregistrer
+    </button>
+
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      Annuler
+    </button>
+
+  </form>
+</div>

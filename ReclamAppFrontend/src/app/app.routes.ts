@@ -27,11 +27,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/agents/agent-form/agent-form')
       .then(m => m.AgentForm)
   },
-  {
-    path: 'agents/modifier/:id',
-    loadComponent: () => import('./pages/agents/agent-form/agent-form')
+{
+  path: 'agents/modifier/:id',
+  loadComponent: () =>
+    import('./pages/agents/agent-form/agent-form')
       .then(m => m.AgentForm)
-  },
+},
   {
     path: 'reclamations',
     loadComponent: () => import('./pages/reclamations/reclamation-list/reclamation-list')

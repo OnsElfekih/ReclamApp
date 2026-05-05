@@ -53,4 +53,8 @@ public class AgentSAVController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
+	    @GetMapping("/search")
+	    public List<AgentSAV> search(@RequestParam String keyword) {
+	        return agentService.search(keyword);
+	    }
 }
