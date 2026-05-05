@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,45 +20,57 @@ export class ClientForm implements OnInit {
     telephone: ''
   };
 
-  id?: number;
+  id!: number;
   isEditMode = false;
   error = '';
 
   constructor(
     private clientService: ClientService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
 
-    if (idParam) {
-      this.id = Number(idParam);
-      this.isEditMode = true;
-      this.loadClient(this.id);
-    }
+      if (idParam) {
+        this.id = Number(idParam);
+        this.isEditMode = true;
+        this.loadClient();
+      }
+    });
   }
 
-  loadClient(id: number): void {
-    this.clientService.findById(id).subscribe({
+  loadClient(): void {
+    this.clientService.findById(this.id).subscribe({
       next: (data) => {
-        this.client = data;
+        this.client = {
+          id: data.id,
+          nom: data.nom,
+          email: data.email,
+          telephone: data.telephone
+        };
+
+        this.cdr.detectChanges();
       },
       error: () => {
         this.error = 'Client introuvable';
+        this.cdr.detectChanges();
       }
     });
   }
 
   saveClient(): void {
-    if (this.isEditMode && this.id) {
+    if (this.isEditMode) {
       this.clientService.update(this.id, this.client).subscribe({
         next: () => {
           this.router.navigate(['/clients']);
         },
         error: () => {
           this.error = 'Erreur lors de la modification du client';
+          this.cdr.detectChanges();
         }
       });
     } else {
@@ -68,6 +80,7 @@ export class ClientForm implements OnInit {
         },
         error: () => {
           this.error = 'Erreur lors de l’ajout du client';
+          this.cdr.detectChanges();
         }
       });
     }
