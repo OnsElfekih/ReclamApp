@@ -24,11 +24,23 @@ export class ReclamationService {
     return this.http.put<Reclamation>(`${this.url}/${id}`, r);
   }
   affecter(reclamationId: number, agentId: number): Observable<Reclamation> {
-    return this.http.put<Reclamation>(
-      `${this.url}/${reclamationId}/affecter/${agentId}`, {}
-    );
+    return this.http.put<Reclamation>(`${this.url}/${reclamationId}/affecter/${agentId}`, {});
   }
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
+  }
+  search(agentNom?: string, clientNom?: string, statut?: string, date?: string) {
+    let params = '';
+
+    if (agentNom) params += `agentNom=${agentNom}&`;
+    if (clientNom) params += `clientNom=${clientNom}&`;
+    if (statut) params += `statut=${statut}&`;
+    if (date) params += `date=${date}&`;
+
+    return this.http.get<Reclamation[]>(`${this.url}/search?${params}`);
+  }
+
+  affecterAgent(reclamationId: number, agentId: number): Observable<Reclamation> {
+    return this.http.put<Reclamation>(`${this.url}/${reclamationId}/affecter/${agentId}`, {});
   }
 }

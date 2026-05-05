@@ -29,6 +29,18 @@ public class ReclamationController {
         }
         return ResponseEntity.ok(reclamationService.findAll());
     }
+    
+	@GetMapping("/search")
+	public ResponseEntity<List<Reclamation>> search(
+	        @RequestParam(required = false) String agentNom,
+	        @RequestParam(required = false) String clientNom,
+	        @RequestParam(required = false) StatutReclamation statut,
+	        @RequestParam(required = false) String date) {
+	
+	    return ResponseEntity.ok(
+	        reclamationService.search(agentNom, clientNom, statut, date)
+	    );
+	}
 
     // GET /api/reclamations/{id}
     @GetMapping("/{id}")

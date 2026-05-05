@@ -3,6 +3,77 @@
 
   <p>Nombre : {{ reclamations.length }}</p>
 
+  <button class="btn btn-primary mb-3" (click)="addReclamation()">
+    Ajouter réclamation
+  </button>
+
+  <div class="row mb-3">
+
+  <div class="col-md-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Nom agent"
+      [(ngModel)]="agentNom"
+      (input)="onSearchChange()">
+  </div>
+
+  <div class="col-md-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Nom client"
+      [(ngModel)]="clientNom"
+      (input)="onSearchChange()">
+  </div>
+
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="statut"
+      (change)="onSearchChange()">
+      <option value="">Statut</option>
+      <option value="OUVERTE">OUVERTE</option>
+      <option value="EN_COURS">EN_COURS</option>
+      <option value="RESOLUE">RESOLUE</option>
+      <option value="FERMEE">FERMEE</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <input
+      type="date"
+      class="form-control"
+      [(ngModel)]="date"
+      (change)="onSearchChange()">
+  </div>
+
+</div>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <div
+    *ngIf="reclamationToDelete"
+    class="alert alert-warning d-flex justify-content-between align-items-center">
+
+    <span>
+      Confirmer la suppression de la réclamation
+      <strong>{{ reclamationToDelete.produit }}</strong> ?
+    </span>
+
+    <div>
+      <button class="btn btn-danger btn-sm me-2" (click)="deleteReclamation()">
+        Oui
+      </button>
+
+      <button class="btn btn-secondary btn-sm" (click)="cancelDelete()">
+        Annuler
+      </button>
+    </div>
+  </div>
+
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -13,23 +84,55 @@
         <th>Statut</th>
         <th>Description</th>
         <th>Date</th>
+        <th>Affectation</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let r of reclamations">
         <td>{{ r.id }}</td>
-
-        <!-- Nom client -->
-        <td>{{ r.client.nom }}</td>
-
-        <!-- Nom agent -->
+        <td>{{ r.client?.nom }}</td>
         <td>{{ r.agentSAV?.nom || 'Non affecté' }}</td>
-
         <td>{{ r.produit }}</td>
         <td>{{ r.statut }}</td>
         <td>{{ r.description }}</td>
         <td>{{ r.date }}</td>
+
+        <td>
+          <select
+            class="form-control form-control-sm"
+            [(ngModel)]="r.selectedAgentId">
+
+            <option [ngValue]="undefined">
+              Choisir agent
+            </option>
+
+            <option *ngFor="let agent of agents" [ngValue]="agent.id">
+              {{ agent.nom }}
+            </option>
+          </select>
+
+          <button
+            class="btn btn-info btn-sm mt-2"
+            (click)="affecterAgent(r.id, r.selectedAgentId)">
+            Affecter
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editReclamation(r.id)">
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="confirmDeleteReclamation(r)">
+            Supprimer
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
