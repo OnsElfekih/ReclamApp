@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule,DatePipe } from '@angular/common';
 import { SuiviService } from '../../core/services/suivi.service';
 import { Suivi } from '../../core/models/suivi.model';
 
 @Component({
   selector: 'app-rapport',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './rapport.html'
 })
 export class Rapport implements OnInit {
