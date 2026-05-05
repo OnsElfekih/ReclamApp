@@ -14,4 +14,7 @@ public interface ReclamationRepository extends JpaRepository<Reclamation, Long> 
 	
 	@Query("SELECT r.statut, COUNT(r) FROM Reclamation r GROUP BY r.statut")
 	List<Object[]> countByStatut();
+	
+	List<Reclamation> findByAgentSAVNomContainingIgnoreCase(String nom);
+	List<Reclamation> findByClientNomContainingIgnoreCase(String nom);
 }
