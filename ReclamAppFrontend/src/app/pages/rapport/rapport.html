@@ -1,4 +1,52 @@
 <div class="container mt-4">
+  <h3>Rapport satisfaction</h3>
+
+  <p class="text-danger" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <div *ngIf="rapport">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5>Nombre total des réclamations</h5>
+            <h2>{{ rapport.totalReclamations }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5>Moyenne des notes</h5>
+            <h2>{{ rapport.moyenneNotes }}/5</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h5>Réclamations par statut</h5>
+
+    <table class="table table-bordered mb-5">
+      <thead>
+        <tr>
+          <th>Statut</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let s of statuts">
+          <td>{{ s.statut }}</td>
+          <td>{{ s.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
   <h3>Rapport des suivis</h3>
 
   <p>Nombre : {{ suivis.length }}</p>
@@ -10,22 +58,25 @@
         <th>Agent</th>
         <th>Action</th>
         <th>Message</th>
+        <th>Date</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let s of suivis">
         <td>
-          <strong>{{ s.reclamation.produit }}</strong
-          ><br />
+          <strong>{{ s.reclamation.produit }}</strong><br>
           <small>
-            Client : {{ s.reclamation.client.nom }} | Date : {{ s.date | date: 'dd/MM/yyyy HH:mm' }}
+            Client : {{ s.reclamation.client.nom }} |
+            Statut : {{ s.reclamation.statut }} |
+            Date : {{ s.reclamation.date | date: 'dd/MM/yyyy' }}
           </small>
         </td>
 
         <td>{{ s.agentSAV.nom }}</td>
         <td>{{ s.action }}</td>
         <td>{{ s.message }}</td>
+        <td>{{ s.date | date: 'dd/MM/yyyy HH:mm' }}</td>
       </tr>
     </tbody>
   </table>

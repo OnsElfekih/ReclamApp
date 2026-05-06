@@ -1,13 +1,12 @@
 package projet.elfekih.ons.controller;
 
 import java.util.List;
-
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import projet.elfekih.ons.entities.Reclamation;
 import projet.elfekih.ons.entities.StatutReclamation;
 import projet.elfekih.ons.service.ReclamationService;
@@ -104,6 +103,11 @@ public class ReclamationController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @GetMapping("/rapport")
+    public ResponseEntity<Map<String, Object>> getRapport() {
+        return ResponseEntity.ok(reclamationService.getRapport());
     }
 
 
