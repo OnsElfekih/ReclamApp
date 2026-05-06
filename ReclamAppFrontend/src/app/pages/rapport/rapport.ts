@@ -10,6 +10,7 @@ import { Suivi } from '../../core/models/suivi.model';
   standalone: true,
   imports: [CommonModule, DatePipe],
   templateUrl: './rapport.html',
+  styleUrl: './rapport.css',
 })
 export class Rapport implements OnInit {
   rapport: any;
@@ -56,5 +57,8 @@ export class Rapport implements OnInit {
         this.cdr.detectChanges();
       },
     });
+  }
+  printReport(): void {
+    window.print();
   }
 }

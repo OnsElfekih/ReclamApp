@@ -1,5 +1,7 @@
-<div class="container mt-4">
+<div id="rapport-content" class="container mt-4">
   <h3>Rapport satisfaction</h3>
+
+  <button class="btn btn-dark mb-3" (click)="printReport()">Générer le rapport</button>
 
   <p class="text-danger" *ngIf="error">
     {{ error }}
@@ -45,7 +47,7 @@
     </table>
   </div>
 
-  <hr>
+  <hr />
 
   <h3>Rapport des suivis</h3>
 
@@ -65,11 +67,12 @@
     <tbody>
       <tr *ngFor="let s of suivis">
         <td>
-          <strong>{{ s.reclamation.produit }}</strong><br>
+          <strong>{{ s.reclamation.produit }}</strong>
+          <br />
+
           <small>
-            Client : {{ s.reclamation.client.nom }} |
-            Statut : {{ s.reclamation.statut }} |
-            Date : {{ s.reclamation.date | date: 'dd/MM/yyyy' }}
+            Client : {{ s.reclamation.client.nom }} | Statut : {{ s.reclamation.statut }} | Date :
+            {{ s.reclamation.date | date: 'dd/MM/yyyy' }}
           </small>
         </td>
 
