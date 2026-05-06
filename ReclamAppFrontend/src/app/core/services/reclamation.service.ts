@@ -29,11 +29,12 @@ export class ReclamationService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
-  search(agentNom?: string, clientNom?: string, statut?: string, date?: string) {
+  search(agentNom?: string, clientNom?: string, produit?: string, statut?: string, date?: string) {
     let params = '';
 
     if (agentNom) params += `agentNom=${agentNom}&`;
     if (clientNom) params += `clientNom=${clientNom}&`;
+    if (produit) params += `produit=${produit}&`;
     if (statut) params += `statut=${statut}&`;
     if (date) params += `date=${date}&`;
 

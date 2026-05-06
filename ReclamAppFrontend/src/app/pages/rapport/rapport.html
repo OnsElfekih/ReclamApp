@@ -6,32 +6,26 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Réclamation</th>
-        <th>Client</th>
         <th>Agent</th>
         <th>Action</th>
         <th>Message</th>
-        <th>Date</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let s of suivis">
-        <td>{{ s.id }}</td>
+        <td>
+          <strong>{{ s.reclamation.produit }}</strong
+          ><br />
+          <small>
+            Client : {{ s.reclamation.client.nom }} | Date : {{ s.date | date: 'dd/MM/yyyy HH:mm' }}
+          </small>
+        </td>
 
-        <!-- ID réclamation -->
-        <td>{{ s.reclamation.id }}</td>
-
-        <!-- Nom client -->
-        <td>{{ s.reclamation.client.nom }}</td>
-
-        <!-- Nom agent -->
         <td>{{ s.agentSAV.nom }}</td>
-
         <td>{{ s.action }}</td>
         <td>{{ s.message }}</td>
-        <td>{{ s.date | date: 'dd/MM/yyyy HH:mm' }}</td>
       </tr>
     </tbody>
   </table>

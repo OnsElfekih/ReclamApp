@@ -93,24 +93,33 @@ public class ReclamationService {
         rapport.put("parStatut", parStatut);
         return rapport;
     }
-    public List<Reclamation> search(String agentNom, String clientNom, StatutReclamation statut, String date) {
+    public List<Reclamation> search(
+        String agentNom,
+        String clientNom,
+        String produit,
+        StatutReclamation statut,
+        String date) {
 
-        return reclamationRepository.findAll().stream()
+    return reclamationRepository.findAll().stream()
 
-            .filter(r -> agentNom == null || agentNom.isEmpty() ||
-                (r.getAgentSAV() != null &&
-                 r.getAgentSAV().getNom().toLowerCase().contains(agentNom.toLowerCase())))
+        .filter(r -> agentNom == null || agentNom.isEmpty() ||
+            (r.getAgentSAV() != null &&
+             r.getAgentSAV().getNom().toLowerCase().contains(agentNom.toLowerCase())))
 
-            .filter(r -> clientNom == null || clientNom.isEmpty() ||
-                (r.getClient() != null &&
-                 r.getClient().getNom().toLowerCase().contains(clientNom.toLowerCase())))
+        .filter(r -> clientNom == null || clientNom.isEmpty() ||
+            (r.getClient() != null &&
+             r.getClient().getNom().toLowerCase().contains(clientNom.toLowerCase())))
 
-            .filter(r -> statut == null ||
-                r.getStatut() == statut)
+        .filter(r -> produit == null || produit.isEmpty() ||
+            (r.getProduit() != null &&
+             r.getProduit().toLowerCase().contains(produit.toLowerCase())))
 
-            .filter(r -> date == null || date.isEmpty() ||
-                r.getDate().toString().equals(date))
+        .filter(r -> statut == null ||
+            r.getStatut() == statut)
 
-            .toList();
-    }
+        .filter(r -> date == null || date.isEmpty() ||
+            r.getDate().toString().equals(date))
+
+        .toList();
+}
 }

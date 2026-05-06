@@ -27,6 +27,7 @@ export class ReclamationList implements OnInit {
   clientNom = '';
   statut = '';
   date = '';
+  produit = '';
 
   constructor(
     private reclamationService: ReclamationService,
@@ -104,6 +105,7 @@ export class ReclamationList implements OnInit {
     const emptySearch =
       this.agentNom.trim() === '' &&
       this.clientNom.trim() === '' &&
+      this.produit.trim() === '' &&
       this.statut === '' &&
       this.date === '';
 
@@ -113,7 +115,7 @@ export class ReclamationList implements OnInit {
     }
 
     this.reclamationService
-      .search(this.agentNom, this.clientNom, this.statut, this.date)
+      .search(this.agentNom, this.clientNom, this.produit, this.statut, this.date)
       .subscribe({
         next: (data) => {
           this.error = '';
