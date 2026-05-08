@@ -6,6 +6,7 @@ import projet.elfekih.ons.entities.SuiviReclamation;
 
 public interface SuiviReclamationRepository extends JpaRepository<SuiviReclamation, Long> {
 	List<SuiviReclamation> findByReclamationId(Long reclamationId);
+
 	List<SuiviReclamation> findByAgentSAVId(Long agentSAVId);
 
 }

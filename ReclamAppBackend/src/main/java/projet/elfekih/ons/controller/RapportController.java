@@ -12,13 +12,18 @@ import projet.elfekih.ons.service.ReclamationService;
 @CrossOrigin(origins = "http://localhost:4200")
 public class RapportController {
 	@Autowired
-    private ReclamationService reclamationService;
+	private ReclamationService reclamationService;
 
-    // GET /api/rapport/satisfaction
-    // Retourne : { totalReclamations, moyenneNotes, parStatut }
-    @GetMapping("/satisfaction")
-    public ResponseEntity<Map<String, Object>> getSatisfaction() {
-        return ResponseEntity.ok(reclamationService.getRapport());
-    }
+	// GET /api/rapport/satisfaction
+	// Retourne : { totalReclamations, moyenneNotes, parStatut }
+	@GetMapping("/satisfaction")
+	public ResponseEntity<Map<String, Object>> getSatisfaction() {
+		return ResponseEntity.ok(reclamationService.getRapport());
+	}
+
+	@GetMapping("/rapport")
+	public ResponseEntity<Map<String, Object>> getRapport() {
+		return ResponseEntity.ok(reclamationService.getRapport());
+	}
 
 }

@@ -1,8 +1,5 @@
 package projet.elfekih.ons.entities;
 
 public enum StatutReclamation {
-    OUVERTE,
-    EN_COURS,
-    RESOLUE,
-    FERMEE
+	OUVERTE, EN_COURS, RESOLUE, FERMEE
 }

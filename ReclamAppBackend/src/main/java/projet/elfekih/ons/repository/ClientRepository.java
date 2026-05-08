@@ -8,6 +8,7 @@ import projet.elfekih.ons.entities.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
 	Optional<Client> findByEmail(String email);
+
 	List<Client> findByNomContainingIgnoreCase(String nom);
 
 }

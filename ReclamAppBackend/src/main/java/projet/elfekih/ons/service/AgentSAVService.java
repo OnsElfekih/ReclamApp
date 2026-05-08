@@ -13,41 +13,34 @@ import projet.elfekih.ons.repository.AgentSAVRepository;
 public class AgentSAVService {
 	@Autowired
 	private AgentSAVRepository agentRepository;
-	
-    public List<AgentSAV> findAll() {
-        return agentRepository.findAll();
-    }
 
-    public AgentSAV findById(Long id) {
-        return agentRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Agent introuvable, id=" + id
-            ));
-    }
+	public List<AgentSAV> findAll() {
+		return agentRepository.findAll();
+	}
 
-    public AgentSAV save(AgentSAV agent) {
-        return agentRepository.save(agent);
-    }
+	public AgentSAV findById(Long id) {
+		return agentRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent introuvable, id=" + id));
+	}
 
-    public AgentSAV update(Long id, AgentSAV agent) {
-        agentRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Agent introuvable, id=" + id
-            ));
-        agent.setId(id);
-        return agentRepository.save(agent);
-    }
-    public void deleteById(Long id) {
-        agentRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Agent introuvable, id=" + id
-            ));
-        agentRepository.deleteById(id);
-    }
-    public List<AgentSAV> search(String keyword) {
-        return agentRepository.findByNomContainingIgnoreCase(keyword);
-    }
+	public AgentSAV save(AgentSAV agent) {
+		return agentRepository.save(agent);
+	}
+
+	public AgentSAV update(Long id, AgentSAV agent) {
+		agentRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent introuvable, id=" + id));
+		agent.setId(id);
+		return agentRepository.save(agent);
+	}
+
+	public void deleteById(Long id) {
+		agentRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent introuvable, id=" + id));
+		agentRepository.deleteById(id);
+	}
+
+	public List<AgentSAV> search(String keyword) {
+		return agentRepository.findByNomContainingIgnoreCase(keyword);
+	}
 }

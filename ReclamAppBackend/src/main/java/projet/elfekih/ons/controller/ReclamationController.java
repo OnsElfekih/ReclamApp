@@ -17,98 +17,88 @@ import projet.elfekih.ons.service.ReclamationService;
 public class ReclamationController {
 	@Autowired
 	private ReclamationService reclamationService;
-	
+
 	// GET /api/reclamations
-    // GET /api/reclamations?statut=OUVERTE  — filtrage optionnel par statut
-    @GetMapping
-    public ResponseEntity<List<Reclamation>> findAll(
-            @RequestParam(required = false) StatutReclamation statut) {
-        if (statut != null) {
-            return ResponseEntity.ok(reclamationService.findByStatut(statut));
-        }
-        return ResponseEntity.ok(reclamationService.findAll());
-    }
-    
-    @GetMapping("/search")
-    public ResponseEntity<List<Reclamation>> search(
-            @RequestParam(required = false) String agentNom,
-            @RequestParam(required = false) String clientNom,
-            @RequestParam(required = false) String produit,
-            @RequestParam(required = false) StatutReclamation statut,
-            @RequestParam(required = false) String date) {
+	// GET /api/reclamations?statut=OUVERTE — filtrage optionnel par statut
+	@GetMapping
+	public ResponseEntity<List<Reclamation>> findAll(@RequestParam(required = false) StatutReclamation statut) {
+		if (statut != null) {
+			return ResponseEntity.ok(reclamationService.findByStatut(statut));
+		}
+		return ResponseEntity.ok(reclamationService.findAll());
+	}
 
-        return ResponseEntity.ok(
-            reclamationService.search(agentNom, clientNom, produit, statut, date)
-        );
-    }
+	@GetMapping("/search")
+	public ResponseEntity<List<Reclamation>> search(@RequestParam(required = false) String agentNom,
+			@RequestParam(required = false) String clientNom, @RequestParam(required = false) String produit,
+			@RequestParam(required = false) StatutReclamation statut, @RequestParam(required = false) String date) {
 
-    // GET /api/reclamations/{id}
-    @GetMapping("/{id}")
-    public ResponseEntity<Reclamation> findById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(reclamationService.findById(id));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    // GET /api/reclamations/client/{clientId}
-    @GetMapping("/client/{clientId}")
-    public ResponseEntity<List<Reclamation>> findByClient(@PathVariable Long clientId) {
-        return ResponseEntity.ok(reclamationService.findByClientId(clientId));
-    }
-    
-    // POST /api/reclamations
-    // Le body JSON doit contenir : { "client": {"id": 1}, "produit": "...", "description": "..." }
-    @PostMapping
-    public ResponseEntity<Reclamation> save(@Valid @RequestBody Reclamation reclamation) {
-        try {
-            Reclamation saved = reclamationService.save(reclamation);
-            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-        } catch (RuntimeException e) {
-        	throw e;
-        }
-    }
+		return ResponseEntity.ok(reclamationService.search(agentNom, clientNom, produit, statut, date));
+	}
 
-    // PUT /api/reclamations/{id}
-    @PutMapping("/{id}")
-    public ResponseEntity<Reclamation> update(
-            @PathVariable Long id,
-            @Valid @RequestBody Reclamation reclamation) {
-        try {
-            return ResponseEntity.ok(reclamationService.update(id, reclamation));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    // PUT /api/reclamations/{id}/affecter/{agentId} — affectation agent
-    @PutMapping("/{id}/affecter/{agentId}")
-    public ResponseEntity<Reclamation> affecter(
-            @PathVariable Long id,
-            @PathVariable Long agentId) {
-        try {
-            return ResponseEntity.ok(reclamationService.affecter(id, agentId));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    // DELETE /api/reclamations/{id}
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        try {
-            reclamationService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    @GetMapping("/rapport")
-    public ResponseEntity<Map<String, Object>> getRapport() {
-        return ResponseEntity.ok(reclamationService.getRapport());
-    }
+	// GET /api/reclamations/{id}
+	@GetMapping("/{id}")
+	public ResponseEntity<Reclamation> findById(@PathVariable Long id) {
+		try {
+			return ResponseEntity.ok(reclamationService.findById(id));
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
+	// GET /api/reclamations/client/{clientId}
+	@GetMapping("/client/{clientId}")
+	public ResponseEntity<List<Reclamation>> findByClient(@PathVariable Long clientId) {
+		return ResponseEntity.ok(reclamationService.findByClientId(clientId));
+	}
+
+	// POST /api/reclamations
+	// Le body JSON doit contenir : { "client": {"id": 1}, "produit": "...",
+	// "description": "..." }
+	@PostMapping
+	public ResponseEntity<Reclamation> save(@Valid @RequestBody Reclamation reclamation) {
+		try {
+			Reclamation saved = reclamationService.save(reclamation);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	}
+
+	// PUT /api/reclamations/{id}
+	@PutMapping("/{id}")
+	public ResponseEntity<Reclamation> update(@PathVariable Long id, @Valid @RequestBody Reclamation reclamation) {
+		try {
+			return ResponseEntity.ok(reclamationService.update(id, reclamation));
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// PUT /api/reclamations/{id}/affecter/{agentId} — affectation agent
+	@PutMapping("/{id}/affecter/{agentId}")
+	public ResponseEntity<Reclamation> affecter(@PathVariable Long id, @PathVariable Long agentId) {
+		try {
+			return ResponseEntity.ok(reclamationService.affecter(id, agentId));
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// DELETE /api/reclamations/{id}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		try {
+			reclamationService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/rapport")
+	public ResponseEntity<Map<String, Object>> getRapport() {
+		return ResponseEntity.ok(reclamationService.getRapport());
+	}
 
 }
