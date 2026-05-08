@@ -46,7 +46,7 @@ export class ProfilClient implements OnInit {
           nom: data.nom,
           email: data.email,
           telephone: data.telephone,
-          motDePasse: data.motDePasse
+          motDePasse: ''
         };
 
         this.cdr.detectChanges();

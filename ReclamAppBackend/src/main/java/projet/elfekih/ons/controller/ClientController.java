@@ -9,7 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import projet.elfekih.ons.dto.ClientDTO;
+import projet.elfekih.ons.dto.ClientRequestDTO;
+import projet.elfekih.ons.dto.LoginDTO;
 import projet.elfekih.ons.entities.Client;
+import projet.elfekih.ons.mapper.ClientMapper;
 import projet.elfekih.ons.service.ClientService;
 
 @RestController
@@ -21,43 +25,35 @@ public class ClientController {
 	private ClientService clientService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Client> findById(@PathVariable Long id) {
-		Client client = clientService.findById(id);
-		return ResponseEntity.ok(client);
+	public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
+		return ResponseEntity.ok(clientService.findById(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<Client> save(@Valid @RequestBody Client client) {
-		Client saved = clientService.save(client);
+	public ResponseEntity<ClientDTO> save(@Valid @RequestBody ClientRequestDTO dto) {
+		ClientDTO saved = clientService.save(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> body) {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
 
-		String email = body.get("email");
-		String motDePasse = body.get("motDePasse");
+		String email = loginDTO.getEmail();
+		String motDePasse = loginDTO.getMotDePasse();
 
 		if ("admin".equals(email) && "admin".equals(motDePasse)) {
-			return ResponseEntity.ok(Map.of(
-					"role", "ADMIN",
-					"message", "Connexion admin réussie"
-			));
+			return ResponseEntity.ok(Map.of("role", "ADMIN", "message", "Connexion admin réussie"));
 		}
 
 		Client connectedClient = clientService.login(email, motDePasse);
+		ClientDTO clientDTO = ClientMapper.toDTO(connectedClient);
 
-		return ResponseEntity.ok(Map.of(
-				"role", "CLIENT",
-				"client", connectedClient,
-				"message", "Connexion client réussie"
-		));
+		return ResponseEntity.ok(Map.of("role", "CLIENT", "client", clientDTO, "message", "Connexion client réussie"));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client) {
-		Client updated = clientService.update(id, client);
-		return ResponseEntity.ok(updated);
+	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @Valid @RequestBody ClientRequestDTO dto) {
+		return ResponseEntity.ok(clientService.update(id, dto));
 	}
 
 	@DeleteMapping("/{id}")
@@ -67,12 +63,12 @@ public class ClientController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Client>> findAll() {
+	public ResponseEntity<List<ClientDTO>> findAll() {
 		return ResponseEntity.ok(clientService.findAll());
 	}
 
 	@GetMapping("/search")
-	public List<Client> search(@RequestParam String keyword) {
-		return clientService.search(keyword);
+	public ResponseEntity<List<ClientDTO>> search(@RequestParam String keyword) {
+		return ResponseEntity.ok(clientService.search(keyword));
 	}
 }

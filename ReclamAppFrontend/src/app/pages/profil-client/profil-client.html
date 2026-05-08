@@ -61,9 +61,7 @@
       />
 
       <div class="text-danger" *ngIf="telephone.invalid && telephone.touched">
-        <small *ngIf="telephone.errors?.['required']">
-          Le téléphone est obligatoire.
-        </small>
+        <small *ngIf="telephone.errors?.['required']"> Le téléphone est obligatoire. </small>
         <small *ngIf="telephone.errors?.['pattern']">
           Le téléphone doit contenir exactement 8 chiffres.
         </small>
@@ -71,29 +69,29 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Mot de passe</label>
+      <label class="form-label">
+        Nouveau mot de passe
+        <small class="text-muted">(optionnel)</small>
+      </label>
+
       <input
         type="password"
         class="form-control"
         name="motDePasse"
         [(ngModel)]="client.motDePasse"
         #motDePasse="ngModel"
-        required
+        minlength="4"
       />
 
       <div class="text-danger" *ngIf="motDePasse.invalid && motDePasse.touched">
-        <small *ngIf="motDePasse.errors?.['required']">
-          Le mot de passe est obligatoire.
+        <small *ngIf="motDePasse.errors?.['minlength']">
+          Le mot de passe doit contenir au moins 4 caractères.
         </small>
       </div>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-success me-2"
-      [disabled]="profilForm.invalid"
-    >
-      Modifier mon profil
+    <button type="submit" class="btn btn-primary" [disabled]="profilForm.invalid">
+      Enregistrer les modifications
     </button>
   </form>
 </div>
