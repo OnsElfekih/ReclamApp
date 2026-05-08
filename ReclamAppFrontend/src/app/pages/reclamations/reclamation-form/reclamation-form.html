@@ -7,7 +7,6 @@
   </p>
 
   <form #reclamationForm="ngForm" (ngSubmit)="saveReclamation()">
-
     <div class="mb-3">
       <label class="form-label">Produit</label>
 
@@ -37,12 +36,7 @@
     <div class="mb-3">
       <label class="form-label">Note</label>
 
-      <select
-        class="form-control"
-        name="note"
-        [(ngModel)]="reclamation.note"
-        required
-      >
+      <select class="form-control" name="note" [(ngModel)]="reclamation.note" required>
         <option [ngValue]="null">Choisir une note</option>
         <option [ngValue]="0">0 - Très mauvaise</option>
         <option [ngValue]="1">1 - Mauvaise</option>
@@ -53,16 +47,10 @@
       </select>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-success me-2"
-      [disabled]="reclamationForm.invalid"
-    >
+    <button type="submit" class="btn btn-success me-2" [disabled]="reclamationForm.invalid">
       Enregistrer
     </button>
 
-    <button type="button" class="btn btn-secondary" (click)="cancel()">
-      Annuler
-    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
   </form>
 </div>

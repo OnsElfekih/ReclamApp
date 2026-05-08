@@ -29,17 +29,11 @@
         <td>{{ r.date }}</td>
         <td>{{ r.note }}</td>
         <td>
-          <a
-            [routerLink]="['/client-reclamations/edit', r.id]"
-            class="btn btn-warning btn-sm me-2">
+          <a [routerLink]="['/client-reclamations/edit', r.id]" class="btn btn-warning btn-sm me-2">
             Modifier
           </a>
 
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="deleteReclamation(r.id)">
-            Supprimer
-          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteReclamation(r.id)">Supprimer</button>
         </td>
       </tr>
     </tbody>

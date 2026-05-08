@@ -6,6 +6,8 @@ export interface Suivi {
   message: string;
   action: string;
   date: string;
-  reclamation: Reclamation;
-  agentSAV: Agent;
+
+  reclamationId: number;
+  agentId: number;
+  agentNom?: string;
 }

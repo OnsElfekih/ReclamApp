@@ -48,7 +48,6 @@
   </div>
 
   <hr />
-
   <h3>Rapport des suivis</h3>
 
   <p>Nombre : {{ suivis.length }}</p>
@@ -66,19 +65,14 @@
 
     <tbody>
       <tr *ngFor="let s of suivis">
-        <td>
-          <strong>{{ s.reclamation.produit }}</strong>
-          <br />
+        <td>Réclamation n° {{ s.reclamationId }}</td>
 
-          <small>
-            Client : {{ s.reclamation.client.nom }} | Statut : {{ s.reclamation.statut }} | Date :
-            {{ s.reclamation.date | date: 'dd/MM/yyyy' }}
-          </small>
-        </td>
+        <td>{{ s.agentNom || 'Non affecté' }}</td>
 
-        <td>{{ s.agentSAV.nom }}</td>
         <td>{{ s.action }}</td>
+
         <td>{{ s.message }}</td>
+
         <td>{{ s.date | date: 'dd/MM/yyyy HH:mm' }}</td>
       </tr>
     </tbody>

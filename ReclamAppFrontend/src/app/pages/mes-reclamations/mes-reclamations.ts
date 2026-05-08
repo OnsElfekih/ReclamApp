@@ -9,17 +9,16 @@ import { ReclamationService } from '../../core/services/reclamation.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './mes-reclamations.html',
-  styleUrls: ['./mes-reclamations.css']
+  styleUrls: ['./mes-reclamations.css'],
 })
 export class MesReclamations implements OnInit {
-
   reclamations: any[] = [];
   client: any;
   error = '';
 
   constructor(
     private reclamationService: ReclamationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +44,7 @@ export class MesReclamations implements OnInit {
       error: () => {
         this.error = 'Erreur lors de la récupération des réclamations';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -58,7 +57,7 @@ export class MesReclamations implements OnInit {
         error: () => {
           this.error = 'Erreur lors de la suppression';
           this.cdr.detectChanges();
-        }
+        },
       });
     }
   }
