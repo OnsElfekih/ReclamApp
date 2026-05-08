@@ -51,4 +51,15 @@ public class ClientService {
 	public List<Client> search(String keyword) {
 		return clientRepository.findByNomContainingIgnoreCase(keyword);
 	}
+
+	public Client login(String email, String motDePasse) {
+		Client client = clientRepository.findByEmail(email)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email introuvable"));
+
+		if (!client.getMotDePasse().equals(motDePasse)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
+		}
+
+		return client;
+	}
 }

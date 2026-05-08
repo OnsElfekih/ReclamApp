@@ -9,8 +9,8 @@ import jakarta.validation.constraints.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Client {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,4 +29,7 @@ public class Client {
 	@Column(length = 8)
 	private String telephone;
 
+	@NotEmpty(message = "Le mot de passe est obligatoire")
+	@Column(nullable = false)
+	private String motDePasse;
 }

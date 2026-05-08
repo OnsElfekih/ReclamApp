@@ -1,6 +1,7 @@
 package projet.elfekih.ons.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,26 +9,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import lombok.*;
 import projet.elfekih.ons.entities.Client;
 import projet.elfekih.ons.service.ClientService;
 
 @RestController
 @RequestMapping("/api/clients")
 @CrossOrigin(origins = "http://localhost:4200")
-
 public class ClientController {
+
 	@Autowired
 	private ClientService clientService;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
-		try {
-			Client client = clientService.findById(id);
-			return ResponseEntity.ok(client);
-		} catch (RuntimeException e) {
-			return ResponseEntity.notFound().build();
-		}
+		Client client = clientService.findById(id);
+		return ResponseEntity.ok(client);
 	}
 
 	@PostMapping
@@ -36,26 +32,38 @@ public class ClientController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
-	// PUT /api/clients/{id}
-	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client) {
-		try {
-			Client updated = clientService.update(id, client);
-			return ResponseEntity.ok(updated);
-		} catch (RuntimeException e) {
-			return ResponseEntity.notFound().build();
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> body) {
+
+		String email = body.get("email");
+		String motDePasse = body.get("motDePasse");
+
+		if ("admin".equals(email) && "admin".equals(motDePasse)) {
+			return ResponseEntity.ok(Map.of(
+					"role", "ADMIN",
+					"message", "Connexion admin réussie"
+			));
 		}
+
+		Client connectedClient = clientService.login(email, motDePasse);
+
+		return ResponseEntity.ok(Map.of(
+				"role", "CLIENT",
+				"client", connectedClient,
+				"message", "Connexion client réussie"
+		));
 	}
 
-	// DELETE /api/clients/{id} — deleteById() cours page 49
+	@PutMapping("/{id}")
+	public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client) {
+		Client updated = clientService.update(id, client);
+		return ResponseEntity.ok(updated);
+	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		try {
-			clientService.deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (RuntimeException e) {
-			return ResponseEntity.notFound().build();
-		}
+		clientService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping
