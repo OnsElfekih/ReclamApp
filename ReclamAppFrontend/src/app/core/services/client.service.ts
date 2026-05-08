@@ -26,4 +26,7 @@ export class ClientService {
   search(keyword: string): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.url}/search?keyword=${keyword}`);
   }
+  login(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/login`, data);
+  }
 }

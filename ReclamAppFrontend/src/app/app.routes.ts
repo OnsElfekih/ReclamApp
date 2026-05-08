@@ -1,21 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/clients', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'clients',
     loadComponent: () =>
       import('./pages/clients/client-list/client-list').then((m) => m.ClientList),
-  },
-  {
-    path: 'clients/nouveau',
-    loadComponent: () =>
-      import('./pages/clients/client-form/client-form').then((m) => m.ClientForm),
-  },
-  {
-    path: 'clients/modifier/:id',
-    loadComponent: () =>
-      import('./pages/clients/client-form/client-form').then((m) => m.ClientForm),
   },
   {
     path: 'agents',
@@ -54,4 +44,37 @@ export const routes: Routes = [
     path: 'rapport',
     loadComponent: () => import('./pages/rapport/rapport').then((m) => m.Rapport),
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login').then((m) => m.Login),
+  },
+  {
+    path: 'espace-client',
+    loadComponent: () => import('./pages/espace-client/espace-client').then((m) => m.EspaceClient),
+  },
+  {
+    path: 'profil-client',
+    loadComponent: () => import('./pages/profil-client/profil-client').then((m) => m.ProfilClient),
+  },
+{
+  path: 'mes-reclamations',
+  loadComponent: () =>
+    import('./pages/mes-reclamations/mes-reclamations')
+      .then(m => m.MesReclamations)
+},
+
+{
+  path: 'client-reclamations/add',
+  loadComponent: () =>
+    import('./pages/reclamations/reclamation-form/reclamation-form')
+      .then(m => m.ReclamationForm)
+},
+
+{
+  path: 'client-reclamations/edit/:id',
+  loadComponent: () =>
+    import('./pages/reclamations/reclamation-form/reclamation-form')
+      .then(m => m.ReclamationForm)
+}
+
 ];

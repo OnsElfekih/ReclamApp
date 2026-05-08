@@ -3,4 +3,5 @@ export interface Client {
   nom: string;
   email: string;
   telephone?: string;
+  motDePasse: string;
 }

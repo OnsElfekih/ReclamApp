@@ -1,11 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">🎯 Gestion Réclamations</a>
-    <div class="navbar-nav ms-auto">
-      <a class="nav-link" routerLink="/clients" routerLinkActive="active">Clients</a>
-      <a class="nav-link" routerLink="/agents" routerLinkActive="active">Agents SAV</a>
-      <a class="nav-link" routerLink="/reclamations" routerLinkActive="active">Réclamations</a>
-      <a class="nav-link" routerLink="/rapport" routerLinkActive="active">Rapport</a>
+    <a class="navbar-brand" routerLink="/login"> ReclamApp </a>
+
+    <div class="navbar-nav" *ngIf="role === 'ADMIN'">
+      <a class="nav-link" routerLink="/clients">Clients</a>
+      <a class="nav-link" routerLink="/agents">Agents</a>
+      <a class="nav-link" routerLink="/reclamations">Réclamations</a>
+      <a class="nav-link" routerLink="/rapport">Rapport</a>
     </div>
+
+    <div class="navbar-nav" *ngIf="role === 'CLIENT'">
+      <a class="nav-link" routerLink="/profil-client">Mon profil</a>
+      <a class="nav-link" routerLink="/mes-reclamations">Mes réclamations</a>
+    </div>
+
+    <button class="btn btn-outline-light" (click)="logout()">Déconnexion</button>
   </div>
 </nav>
