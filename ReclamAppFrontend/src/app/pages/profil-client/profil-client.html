@@ -1,12 +1,15 @@
 <div class="container mt-4">
-  <h3 *ngIf="!isEditMode">Ajouter client</h3>
-  <h3 *ngIf="isEditMode">Modifier client</h3>
+  <h3>Mon profil</h3>
+
+  <p class="text-success" *ngIf="message">
+    {{ message }}
+  </p>
 
   <p class="text-danger" *ngIf="error">
     {{ error }}
   </p>
 
-  <form #clientForm="ngForm" (ngSubmit)="saveClient()">
+  <form #profilForm="ngForm" (ngSubmit)="updateProfil()">
     <div class="mb-3">
       <label class="form-label">Nom</label>
       <input
@@ -20,7 +23,7 @@
       />
 
       <div class="text-danger" *ngIf="nom.invalid && nom.touched">
-        <small *ngIf="nom.errors?.['required']"> Le nom est obligatoire. </small>
+        <small *ngIf="nom.errors?.['required']">Le nom est obligatoire.</small>
         <small *ngIf="nom.errors?.['minlength']">
           Le nom doit contenir au moins 3 caractères.
         </small>
@@ -40,8 +43,8 @@
       />
 
       <div class="text-danger" *ngIf="email.invalid && email.touched">
-        <small *ngIf="email.errors?.['required']"> L'email est obligatoire. </small>
-        <small *ngIf="email.errors?.['email']"> Format email invalide. </small>
+        <small *ngIf="email.errors?.['required']">L'email est obligatoire.</small>
+        <small *ngIf="email.errors?.['email']">Format email invalide.</small>
       </div>
     </div>
 
@@ -58,17 +61,39 @@
       />
 
       <div class="text-danger" *ngIf="telephone.invalid && telephone.touched">
-        <small *ngIf="telephone.errors?.['required']"> Le téléphone est obligatoire. </small>
+        <small *ngIf="telephone.errors?.['required']">
+          Le téléphone est obligatoire.
+        </small>
         <small *ngIf="telephone.errors?.['pattern']">
           Le téléphone doit contenir exactement 8 chiffres.
         </small>
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success me-2" [disabled]="clientForm.invalid">
-      Enregistrer
-    </button>
+    <div class="mb-3">
+      <label class="form-label">Mot de passe</label>
+      <input
+        type="password"
+        class="form-control"
+        name="motDePasse"
+        [(ngModel)]="client.motDePasse"
+        #motDePasse="ngModel"
+        required
+      />
 
-    <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+      <div class="text-danger" *ngIf="motDePasse.invalid && motDePasse.touched">
+        <small *ngIf="motDePasse.errors?.['required']">
+          Le mot de passe est obligatoire.
+        </small>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-success me-2"
+      [disabled]="profilForm.invalid"
+    >
+      Modifier mon profil
+    </button>
   </form>
 </div>

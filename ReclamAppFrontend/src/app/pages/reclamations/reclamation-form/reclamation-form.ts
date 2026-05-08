@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReclamationService } from '../../../core/services/reclamation.service';
-import { ClientService } from '../../../core/services/client.service';
-import { Client } from '../../../core/models/client.model';
 
 @Component({
   selector: 'app-reclamation-form',
@@ -15,16 +13,13 @@ import { Client } from '../../../core/models/client.model';
   styleUrl: './reclamation-form.css',
 })
 export class ReclamationForm implements OnInit {
-  clients: Client[] = [];
+  client: any;
 
   reclamation: any = {
-    client: {
-      id: null,
-    },
     produit: '',
     description: '',
     note: null,
-    statut: '',
+    statut: 'OUVERTE',
   };
 
   id!: number;
@@ -33,14 +28,20 @@ export class ReclamationForm implements OnInit {
 
   constructor(
     private reclamationService: ReclamationService,
-    private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.loadClients();
+    const connectedClient = localStorage.getItem('client');
+
+    if (!connectedClient) {
+      this.error = 'Aucun client connecté';
+      return;
+    }
+
+    this.client = JSON.parse(connectedClient);
 
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
@@ -48,31 +49,21 @@ export class ReclamationForm implements OnInit {
       if (idParam) {
         this.id = Number(idParam);
         this.isEditMode = true;
+
         this.loadReclamation();
       }
     });
   }
 
-  loadClients(): void {
-    this.clientService.findAll().subscribe({
-      next: (data) => {
-        this.clients = data;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.error = 'Erreur de récupération des clients';
-        this.cdr.detectChanges();
-      },
-    });
-  }
-
   loadReclamation(): void {
     this.reclamationService.findById(this.id).subscribe({
-      next: (data) => {
+      next: (data: any) => {
+        if (data.client?.id !== this.client.id) {
+          this.error = 'Vous ne pouvez pas modifier cette réclamation';
+          return;
+        }
+
         this.reclamation = {
-          client: {
-            id: data.client?.id,
-          },
           produit: data.produit,
           description: data.description,
           note: data.note,
@@ -81,6 +72,7 @@ export class ReclamationForm implements OnInit {
 
         this.cdr.detectChanges();
       },
+
       error: () => {
         this.error = 'Réclamation introuvable';
         this.cdr.detectChanges();
@@ -89,26 +81,23 @@ export class ReclamationForm implements OnInit {
   }
 
   saveReclamation(): void {
-    if (!this.reclamation.client.id) {
-      this.error = 'Veuillez choisir un client';
-      return;
-    }
-
     const payload = {
       client: {
-        id: Number(this.reclamation.client.id),
+        id: this.client.id,
       },
+
       produit: this.reclamation.produit,
       description: this.reclamation.description,
       note: Number(this.reclamation.note),
-      statut: this.reclamation.statut,
+      statut: this.reclamation.statut || 'OUVERTE',
     };
 
     if (this.isEditMode) {
       this.reclamationService.update(this.id, payload).subscribe({
         next: () => {
-          this.router.navigate(['/reclamations']);
+          this.goToMesReclamations();
         },
+
         error: () => {
           this.error = 'Erreur lors de la modification de la réclamation';
           this.cdr.detectChanges();
@@ -117,8 +106,9 @@ export class ReclamationForm implements OnInit {
     } else {
       this.reclamationService.save(payload).subscribe({
         next: () => {
-          this.router.navigate(['/reclamations']);
+          this.goToMesReclamations();
         },
+
         error: () => {
           this.error = 'Erreur lors de l’ajout de la réclamation';
           this.cdr.detectChanges();
@@ -127,7 +117,11 @@ export class ReclamationForm implements OnInit {
     }
   }
 
+  goToMesReclamations(): void {
+    this.router.navigateByUrl('/mes-reclamations');
+  }
+
   cancel(): void {
-    this.router.navigate(['/reclamations']);
+    this.router.navigate(['/mes-reclamations']);
   }
 }

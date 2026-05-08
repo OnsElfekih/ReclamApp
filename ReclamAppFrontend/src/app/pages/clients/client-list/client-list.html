@@ -3,8 +3,6 @@
 
   <p>Nombre de clients : {{ clients.length }}</p>
 
-  <button class="btn btn-primary mb-3" (click)="addClient()">Ajouter client</button>
-
   <input
     type="text"
     class="form-control mb-3"
@@ -34,9 +32,6 @@
         <td>{{ client.telephone }}</td>
 
         <td>
-          <button class="btn btn-warning btn-sm me-2" (click)="editClient(client.id!)">
-            Modifier
-          </button>
 
           <button class="btn btn-danger btn-sm" (click)="confirmDeleteClient(client.id!)">
             Supprimer
