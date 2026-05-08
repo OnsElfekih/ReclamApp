@@ -8,7 +8,8 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import projet.elfekih.ons.entities.Reclamation;
+import projet.elfekih.ons.dto.ReclamationDTO;
+import projet.elfekih.ons.dto.ReclamationRequestDTO;
 import projet.elfekih.ons.entities.StatutReclamation;
 import projet.elfekih.ons.service.ReclamationService;
 
@@ -21,7 +22,9 @@ public class ReclamationController {
 	private ReclamationService reclamationService;
 
 	@GetMapping
-	public ResponseEntity<List<Reclamation>> findAll(@RequestParam(required = false) StatutReclamation statut) {
+	public ResponseEntity<List<ReclamationDTO>> findAll(
+			@RequestParam(required = false) StatutReclamation statut
+	) {
 		if (statut != null) {
 			return ResponseEntity.ok(reclamationService.findByStatut(statut));
 		}
@@ -30,35 +33,50 @@ public class ReclamationController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Reclamation>> search(@RequestParam(required = false) String agentNom,
-			@RequestParam(required = false) String clientNom, @RequestParam(required = false) String produit,
-			@RequestParam(required = false) StatutReclamation statut, @RequestParam(required = false) String date) {
-		return ResponseEntity.ok(reclamationService.search(agentNom, clientNom, produit, statut, date));
+	public ResponseEntity<List<ReclamationDTO>> search(
+			@RequestParam(required = false) String agentNom,
+			@RequestParam(required = false) String clientNom,
+			@RequestParam(required = false) String produit,
+			@RequestParam(required = false) StatutReclamation statut,
+			@RequestParam(required = false) String date
+	) {
+		return ResponseEntity.ok(
+				reclamationService.search(agentNom, clientNom, produit, statut, date)
+		);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Reclamation> findById(@PathVariable Long id) {
+	public ResponseEntity<ReclamationDTO> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(reclamationService.findById(id));
 	}
 
 	@GetMapping("/client/{clientId}")
-	public ResponseEntity<List<Reclamation>> findByClient(@PathVariable Long clientId) {
+	public ResponseEntity<List<ReclamationDTO>> findByClient(@PathVariable Long clientId) {
 		return ResponseEntity.ok(reclamationService.findByClientId(clientId));
 	}
 
 	@PostMapping
-	public ResponseEntity<Reclamation> save(@Valid @RequestBody Reclamation reclamation) {
-		Reclamation saved = reclamationService.save(reclamation);
+	public ResponseEntity<ReclamationDTO> save(
+			@Valid @RequestBody ReclamationRequestDTO dto
+	) {
+		ReclamationDTO saved = reclamationService.save(dto);
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Reclamation> update(@PathVariable Long id, @Valid @RequestBody Reclamation reclamation) {
-		return ResponseEntity.ok(reclamationService.update(id, reclamation));
+	public ResponseEntity<ReclamationDTO> update(
+			@PathVariable Long id,
+			@Valid @RequestBody ReclamationRequestDTO dto
+	) {
+		return ResponseEntity.ok(reclamationService.update(id, dto));
 	}
 
 	@PutMapping("/{id}/affecter/{agentId}")
-	public ResponseEntity<Reclamation> affecter(@PathVariable Long id, @PathVariable Long agentId) {
+	public ResponseEntity<ReclamationDTO> affecter(
+			@PathVariable Long id,
+			@PathVariable Long agentId
+	) {
 		return ResponseEntity.ok(reclamationService.affecter(id, agentId));
 	}
 

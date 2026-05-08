@@ -49,7 +49,6 @@ export class ReclamationForm implements OnInit {
       if (idParam) {
         this.id = Number(idParam);
         this.isEditMode = true;
-
         this.loadReclamation();
       }
     });
@@ -58,7 +57,7 @@ export class ReclamationForm implements OnInit {
   loadReclamation(): void {
     this.reclamationService.findById(this.id).subscribe({
       next: (data: any) => {
-        if (data.client?.id !== this.client.id) {
+        if (data.clientId !== this.client.id) {
           this.error = 'Vous ne pouvez pas modifier cette réclamation';
           return;
         }
@@ -82,10 +81,7 @@ export class ReclamationForm implements OnInit {
 
   saveReclamation(): void {
     const payload = {
-      client: {
-        id: this.client.id,
-      },
-
+      clientId: this.client.id,
       produit: this.reclamation.produit,
       description: this.reclamation.description,
       note: Number(this.reclamation.note),

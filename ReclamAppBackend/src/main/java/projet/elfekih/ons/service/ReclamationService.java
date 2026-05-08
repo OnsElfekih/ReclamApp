@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import projet.elfekih.ons.repository.*;
+import projet.elfekih.ons.dto.ReclamationDTO;
+import projet.elfekih.ons.dto.ReclamationRequestDTO;
 import projet.elfekih.ons.entities.*;
+import projet.elfekih.ons.mapper.ReclamationMapper;
+import projet.elfekih.ons.repository.*;
 
 @Service
 public class ReclamationService {
@@ -24,69 +27,118 @@ public class ReclamationService {
 	@Autowired
 	private AgentSAVRepository agentRepository;
 
-	public List<Reclamation> findAll() {
-		return reclamationRepository.findAll();
+	public List<ReclamationDTO> findAll() {
+		return reclamationRepository.findAll()
+				.stream()
+				.map(ReclamationMapper::toDTO)
+				.toList();
 	}
 
-	public Reclamation findById(Long id) {
-		return reclamationRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Réclamation introuvable, id=" + id));
+	public ReclamationDTO findById(Long id) {
+		Reclamation reclamation = reclamationRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Réclamation introuvable, id=" + id
+				));
+
+		return ReclamationMapper.toDTO(reclamation);
 	}
 
-	public List<Reclamation> findByStatut(StatutReclamation statut) {
-		return reclamationRepository.findByStatut(statut);
+	public List<ReclamationDTO> findByStatut(StatutReclamation statut) {
+		return reclamationRepository.findByStatut(statut)
+				.stream()
+				.map(ReclamationMapper::toDTO)
+				.toList();
 	}
 
-	public List<Reclamation> findByClientId(Long clientId) {
-		return reclamationRepository.findByClientId(clientId);
+	public List<ReclamationDTO> findByClientId(Long clientId) {
+		return reclamationRepository.findByClientId(clientId)
+				.stream()
+				.map(ReclamationMapper::toDTO)
+				.toList();
 	}
 
-	public Reclamation save(Reclamation reclamation) {
-		Client client = clientRepository.findById(reclamation.getClient().getId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client introuvable"));
+	public ReclamationDTO save(ReclamationRequestDTO dto) {
+		Client client = clientRepository.findById(dto.getClientId())
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Client introuvable"
+				));
+
+		Reclamation reclamation = ReclamationMapper.toEntity(dto);
 
 		reclamation.setClient(client);
 		reclamation.setStatut(StatutReclamation.OUVERTE);
 		reclamation.setDate(java.time.LocalDate.now());
 
-		return reclamationRepository.save(reclamation);
+		Reclamation saved = reclamationRepository.save(reclamation);
+
+		return ReclamationMapper.toDTO(saved);
 	}
 
-	public Reclamation update(Long id, Reclamation reclamation) {
-		Reclamation existing = reclamationRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Réclamation introuvable, id=" + id));
+	public ReclamationDTO update(Long id, ReclamationRequestDTO dto) {
+		Reclamation existing = reclamationRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Réclamation introuvable, id=" + id
+				));
 
-		Client client = clientRepository.findById(reclamation.getClient().getId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client introuvable"));
+		Client client = clientRepository.findById(dto.getClientId())
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Client introuvable"
+				));
 
 		existing.setClient(client);
-		existing.setProduit(reclamation.getProduit());
-		existing.setDescription(reclamation.getDescription());
-		existing.setStatut(reclamation.getStatut());
-		existing.setNote(reclamation.getNote());
+		existing.setProduit(dto.getProduit());
+		existing.setDescription(dto.getDescription());
+		existing.setNote(dto.getNote());
 
-		return reclamationRepository.save(existing);
+		if (dto.getStatut() != null) {
+			existing.setStatut(dto.getStatut());
+		}
+
+		Reclamation updated = reclamationRepository.save(existing);
+
+		return ReclamationMapper.toDTO(updated);
 	}
 
-	public Reclamation affecter(Long reclamationId, Long agentId) {
-		Reclamation r = reclamationRepository.findById(reclamationId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-						"Réclamation introuvable, id=" + reclamationId));
+	public ReclamationDTO affecter(Long reclamationId, Long agentId) {
+		Reclamation reclamation = reclamationRepository.findById(reclamationId)
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Réclamation introuvable, id=" + reclamationId
+				));
 
-		AgentSAV agent = agentRepository.findById(agentId).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent introuvable, id=" + agentId));
+		AgentSAV agent = agentRepository.findById(agentId)
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Agent introuvable, id=" + agentId
+				));
 
-		r.setAgentSAV(agent);
-		r.setStatut(StatutReclamation.EN_COURS);
+		reclamation.setAgentSAV(agent);
+		reclamation.setStatut(StatutReclamation.EN_COURS);
 
-		return reclamationRepository.save(r);
+		Reclamation updated = reclamationRepository.save(reclamation);
+
+		return ReclamationMapper.toDTO(updated);
 	}
 
 	public void deleteById(Long id) {
-		reclamationRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Réclamation introuvable, id=" + id));
+		reclamationRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"Réclamation introuvable, id=" + id
+				));
 
-		reclamationRepository.deleteById(id);
+		try {
+			reclamationRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.CONFLICT,
+					"Impossible de supprimer cette réclamation car elle possède des suivis"
+			);
+		}
 	}
 
 	public Map<String, Object> getRapport() {
@@ -95,6 +147,7 @@ public class ReclamationService {
 		List<Object[]> parStatutRaw = reclamationRepository.countByStatut();
 
 		Map<String, Long> parStatut = new LinkedHashMap<>();
+
 		for (Object[] row : parStatutRaw) {
 			parStatut.put(row[0].toString(), (Long) row[1]);
 		}
@@ -107,26 +160,35 @@ public class ReclamationService {
 		return rapport;
 	}
 
-	public List<Reclamation> search(String agentNom, String clientNom, String produit, StatutReclamation statut,
-			String date) {
+	public List<ReclamationDTO> search(
+			String agentNom,
+			String clientNom,
+			String produit,
+			StatutReclamation statut,
+			String date
+	) {
 
-		return reclamationRepository.findAll().stream()
+		return reclamationRepository.findAll()
+				.stream()
 
 				.filter(r -> agentNom == null || agentNom.isEmpty()
 						|| (r.getAgentSAV() != null
-								&& r.getAgentSAV().getNom().toLowerCase().contains(agentNom.toLowerCase())))
+						&& r.getAgentSAV().getNom().toLowerCase().contains(agentNom.toLowerCase())))
 
 				.filter(r -> clientNom == null || clientNom.isEmpty()
 						|| (r.getClient() != null
-								&& r.getClient().getNom().toLowerCase().contains(clientNom.toLowerCase())))
+						&& r.getClient().getNom().toLowerCase().contains(clientNom.toLowerCase())))
 
 				.filter(r -> produit == null || produit.isEmpty()
-						|| (r.getProduit() != null && r.getProduit().toLowerCase().contains(produit.toLowerCase())))
+						|| (r.getProduit() != null
+						&& r.getProduit().toLowerCase().contains(produit.toLowerCase())))
 
 				.filter(r -> statut == null || r.getStatut() == statut)
 
-				.filter(r -> date == null || date.isEmpty() || r.getDate().toString().equals(date))
+				.filter(r -> date == null || date.isEmpty()
+						|| r.getDate().toString().equals(date))
 
+				.map(ReclamationMapper::toDTO)
 				.toList();
 	}
 }

@@ -85,8 +85,8 @@
 
     <tbody>
       <tr *ngFor="let r of reclamations">
-        <td>{{ r.client?.nom }}</td>
-        <td>{{ r.agentSAV?.nom || 'Non affecté' }}</td>
+<td>{{ r.clientNom }}</td>
+<td>{{ r.agentNom || 'Non affecté' }}</td>
         <td>{{ r.produit }}</td>
         <td>{{ r.statut }}</td>
         <td>{{ r.description }}</td>
