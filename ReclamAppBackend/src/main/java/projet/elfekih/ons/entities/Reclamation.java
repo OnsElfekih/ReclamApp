@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Reclamations")
@@ -43,5 +45,9 @@ public class Reclamation {
 	@ManyToOne
 	@JoinColumn(name = "idAgentSAV")
 	private AgentSAV agentSAV;
+
+	@OneToMany(mappedBy = "reclamation", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<SuiviReclamation> suivis;
 
 }
