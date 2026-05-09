@@ -56,25 +56,30 @@ export const routes: Routes = [
     path: 'profil-client',
     loadComponent: () => import('./pages/profil-client/profil-client').then((m) => m.ProfilClient),
   },
-{
-  path: 'mes-reclamations',
-  loadComponent: () =>
-    import('./pages/mes-reclamations/mes-reclamations')
-      .then(m => m.MesReclamations)
-},
+  {
+    path: 'mes-reclamations',
+    loadComponent: () =>
+      import('./pages/mes-reclamations/mes-reclamations').then((m) => m.MesReclamations),
+  },
 
-{
-  path: 'client-reclamations/add',
-  loadComponent: () =>
-    import('./pages/reclamations/reclamation-form/reclamation-form')
-      .then(m => m.ReclamationForm)
-},
+  {
+    path: 'client-reclamations/add',
+    loadComponent: () =>
+      import('./pages/reclamations/reclamation-form/reclamation-form').then(
+        (m) => m.ReclamationForm,
+      ),
+  },
 
-{
-  path: 'client-reclamations/edit/:id',
-  loadComponent: () =>
-    import('./pages/reclamations/reclamation-form/reclamation-form')
-      .then(m => m.ReclamationForm)
-}
+  {
+    path: 'client-reclamations/edit/:id',
+    loadComponent: () =>
+      import('./pages/reclamations/reclamation-form/reclamation-form').then(
+        (m) => m.ReclamationForm,
+      ),
+  },
 
+  {
+    path: 'signup',
+    loadComponent: () => import('./pages/signup/signup').then((m) => m.Signup),
+  },
 ];

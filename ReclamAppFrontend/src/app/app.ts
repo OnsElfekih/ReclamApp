@@ -13,13 +13,12 @@ import { Navbar } from './shared/navbar/navbar';
     <app-navbar *ngIf="!isLoginPage()"></app-navbar>
 
     <router-outlet></router-outlet>
-  `
+  `,
 })
 export class App {
-
   constructor(public router: Router) {}
 
   isLoginPage(): boolean {
-    return this.router.url === '/login';
+    return this.router.url === '/login' || this.router.url === '/signup';
   }
 }
