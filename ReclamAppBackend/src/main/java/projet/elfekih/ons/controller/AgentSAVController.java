@@ -50,4 +50,9 @@ public class AgentSAVController {
 	public ResponseEntity<List<AgentSAVDTO>> search(@RequestParam String keyword) {
 		return ResponseEntity.ok(agentService.search(keyword));
 	}
+
+	@GetMapping("/{id}/reclamations")
+	public ResponseEntity<?> getReclamationsByAgent(@PathVariable Long id) {
+		return ResponseEntity.ok(agentService.findReclamationsByAgent(id));
+	}
 }

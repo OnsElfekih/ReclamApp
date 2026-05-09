@@ -12,6 +12,8 @@ import projet.elfekih.ons.dto.AgentSAVRequestDTO;
 import projet.elfekih.ons.entities.AgentSAV;
 import projet.elfekih.ons.mapper.AgentSAVMapper;
 import projet.elfekih.ons.repository.AgentSAVRepository;
+import projet.elfekih.ons.dto.ReclamationDTO;
+import projet.elfekih.ons.mapper.ReclamationMapper;
 
 @Service
 public class AgentSAVService {
@@ -63,5 +65,12 @@ public class AgentSAVService {
 
 	public List<AgentSAVDTO> search(String keyword) {
 		return agentRepository.findByNomContainingIgnoreCase(keyword).stream().map(AgentSAVMapper::toDTO).toList();
+	}
+
+	public List<ReclamationDTO> findReclamationsByAgent(Long id) {
+		AgentSAV agent = agentRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent introuvable, id=" + id));
+
+		return agent.getReclamations().stream().map(ReclamationMapper::toDTO).toList();
 	}
 }
