@@ -3,6 +3,8 @@ package projet.elfekih.ons.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Clients")
@@ -32,4 +34,8 @@ public class Client {
 	@NotEmpty(message = "Le mot de passe est obligatoire")
 	@Column(nullable = false)
 	private String motDePasse;
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	@JsonIgnore // Pour éviter la sérialisation infinie
+	private List<Reclamation> reclamations;
 }
