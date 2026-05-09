@@ -31,11 +31,22 @@ public class ClientService {
 	}
 
 	public ClientDTO save(ClientRequestDTO dto) {
+
+		if (dto.getMotDePasse() == null || dto.getMotDePasse().isBlank()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le mot de passe est obligatoire");
+		}
+
+		if (dto.getMotDePasse().length() < 4) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Le mot de passe doit contenir au moins 4 caractères");
+		}
+
 		clientRepository.findByEmail(dto.getEmail()).ifPresent(c -> {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Email déjà utilisé");
 		});
 
 		Client client = ClientMapper.toEntity(dto);
+
 		Client saved = clientRepository.save(client);
 
 		return ClientMapper.toDTO(saved);
