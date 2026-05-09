@@ -1,41 +1,48 @@
 <div class="container mt-4">
-  <h3>Mes réclamations</h3>
+  <div class="card p-4">
+    <h3>Mes réclamations</h3>
 
-  <p class="text-danger" *ngIf="error">
-    {{ error }}
-  </p>
+    <p class="text-danger" *ngIf="error">
+      {{ error }}
+    </p>
 
-  <a routerLink="/client-reclamations/add" class="btn btn-primary mb-3">
-    Ajouter une réclamation
-  </a>
+    <a routerLink="/client-reclamations/add" class="btn btn-primary mb-3">
+      Ajouter une réclamation
+    </a>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Produit</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Date</th>
-        <th>Note</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Description</th>
+          <th>Statut</th>
+          <th>Date</th>
+          <th>Note</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let r of reclamations">
-        <td>{{ r.produit }}</td>
-        <td>{{ r.description }}</td>
-        <td>{{ r.statut }}</td>
-        <td>{{ r.date }}</td>
-        <td>{{ r.note }}</td>
-        <td>
-          <a [routerLink]="['/client-reclamations/edit', r.id]" class="btn btn-warning btn-sm me-2">
-            Modifier
-          </a>
+      <tbody>
+        <tr *ngFor="let r of reclamations">
+          <td>{{ r.produit }}</td>
+          <td>{{ r.description }}</td>
+          <td>{{ r.statut }}</td>
+          <td>{{ r.date }}</td>
+          <td>{{ r.note }}</td>
+          <td>
+            <a
+              [routerLink]="['/client-reclamations/edit', r.id]"
+              class="btn btn-warning btn-sm me-2"
+            >
+              Modifier
+            </a>
 
-          <button class="btn btn-danger btn-sm" (click)="deleteReclamation(r.id)">Supprimer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <button class="btn btn-danger btn-sm" (click)="deleteReclamation(r.id)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

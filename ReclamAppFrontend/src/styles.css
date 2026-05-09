@@ -1,19 +1,77 @@
-@media print {
+body {
+  background: #f4f7fb;
+  font-family: Arial, sans-serif;
+  color: #1f2937;
+}
 
-  app-navbar {
-    display: none !important;
-  }
+.container {
+  max-width: 1150px;
+}
 
-  button {
-    display: none !important;
-  }
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
 
-  body {
-    margin: 0;
-    padding: 0;
-  }
+h3 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+}
 
-  #rapport-content {
-    width: 100%;
-  }
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-primary,
+.btn-success,
+.btn-dark {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-dark:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.table {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.table thead th {
+  background: #1e3a8a;
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 14px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  border-color: #2563eb !important;
+}
+
+.alert {
+  border-radius: 12px;
 }

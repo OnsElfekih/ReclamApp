@@ -1,32 +1,24 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card p-4 shadow">
-        <h3 class="text-center mb-4">Connexion</h3>
+<div class="auth-page">
+  <div class="auth-card">
+    <h3 class="text-center mb-4">Connexion</h3>
 
-        <div class="mb-3">
-          <label>Email</label>
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="email" />
+    </div>
 
-          <input type="email" class="form-control" [(ngModel)]="email" />
-        </div>
+    <div class="mb-3">
+      <label>Mot de passe</label>
+      <input type="password" class="form-control" [(ngModel)]="motDePasse" />
+    </div>
 
-        <div class="mb-3">
-          <label>Mot de passe</label>
+    <p class="text-danger">{{ error }}</p>
 
-          <input type="password" class="form-control" [(ngModel)]="motDePasse" />
-        </div>
+    <button class="btn btn-primary w-100" (click)="login()">Se connecter</button>
 
-        <p class="text-danger">
-          {{ error }}
-        </p>
-
-        <button class="btn btn-dark w-100" (click)="login()">Se connecter</button>
-      </div>
-      <div class="text-center mt-3">
-        <span>Nouveau client ?</span>
-
-        <a routerLink="/signup"> Créer un compte </a>
-      </div>
+    <div class="text-center mt-3">
+      <span>Nouveau client ? </span>
+      <a routerLink="/signup">Créer un compte</a>
     </div>
   </div>
 </div>

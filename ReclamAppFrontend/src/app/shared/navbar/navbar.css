@@ -1,0 +1,20 @@
+.navbar {
+  background: #111827 !important;
+  padding: 14px 0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  color: #e5e7eb !important;
+  margin-right: 12px;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: white !important;
+}
