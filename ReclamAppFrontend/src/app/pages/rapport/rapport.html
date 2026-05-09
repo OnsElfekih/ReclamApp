@@ -49,9 +49,23 @@
     </div>
 
     <hr />
+
     <h3>Rapport des suivis</h3>
 
     <p>Nombre : {{ suivis.length }}</p>
+
+    <div
+      *ngIf="suiviToDeleteId"
+      class="alert alert-danger d-flex justify-content-between align-items-center"
+    >
+      <span> Voulez-vous supprimer ce suivi ? </span>
+
+      <div>
+        <button class="btn btn-danger btn-sm me-2" (click)="deleteSuivi()">Oui</button>
+
+        <button class="btn btn-secondary btn-sm" (click)="cancelDeleteSuivi()">Annuler</button>
+      </div>
+    </div>
 
     <table class="table table-bordered">
       <thead>
@@ -61,20 +75,23 @@
           <th>Action</th>
           <th>Message</th>
           <th>Date</th>
+          <th>Suppression</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let s of suivis">
-          <td>Réclamation n° {{ s.reclamationId }}</td>
-
+        <tr *ngFor="let s of suivis; let i = index">
+          <td>Réclamation n° {{ i + 1 }}</td>
           <td>{{ s.agentNom || 'Non affecté' }}</td>
-
           <td>{{ s.action }}</td>
-
           <td>{{ s.message }}</td>
-
           <td>{{ s.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="confirmDeleteSuivi(s.id)">
+              Supprimer
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

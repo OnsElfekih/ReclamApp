@@ -18,6 +18,8 @@ export class Rapport implements OnInit {
   suivis: Suivi[] = [];
   error = '';
 
+  suiviToDeleteId?: number;
+
   constructor(
     private rapportService: RapportService,
     private suiviService: SuiviService,
@@ -58,6 +60,31 @@ export class Rapport implements OnInit {
       },
     });
   }
+
+  confirmDeleteSuivi(id?: number): void {
+    this.suiviToDeleteId = id;
+  }
+
+  deleteSuivi(): void {
+    if (!this.suiviToDeleteId) return;
+
+    this.suiviService.delete(this.suiviToDeleteId).subscribe({
+      next: () => {
+        this.loadSuivis();
+        this.cancelDeleteSuivi();
+      },
+      error: () => {
+        this.error = 'Erreur lors de la suppression du suivi';
+        this.cancelDeleteSuivi();
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  cancelDeleteSuivi(): void {
+    this.suiviToDeleteId = undefined;
+  }
+
   printReport(): void {
     window.print();
   }

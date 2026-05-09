@@ -9,7 +9,20 @@
     <a routerLink="/client-reclamations/add" class="btn btn-primary mb-3">
       Ajouter une réclamation
     </a>
+    <div
+      *ngIf="reclamationToDelete"
+      class="alert alert-danger d-flex justify-content-between align-items-center"
+    >
+      <span>
+        Voulez-vous supprimer la réclamation
+        <strong>{{ reclamationToDelete.produit }}</strong> ?
+      </span>
 
+      <div>
+        <button class="btn btn-danger btn-sm me-2" (click)="deleteReclamation()">Oui</button>
+        <button class="btn btn-secondary btn-sm" (click)="cancelDelete()">Annuler</button>
+      </div>
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -37,7 +50,7 @@
               Modifier
             </a>
 
-            <button class="btn btn-danger btn-sm" (click)="deleteReclamation(r.id)">
+            <button class="btn btn-danger btn-sm" (click)="confirmDeleteReclamation(r)">
               Supprimer
             </button>
           </td>

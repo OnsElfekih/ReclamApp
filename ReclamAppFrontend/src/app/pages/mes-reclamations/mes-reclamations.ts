@@ -16,6 +16,8 @@ export class MesReclamations implements OnInit {
   client: any;
   error = '';
 
+  reclamationToDelete?: any;
+
   constructor(
     private reclamationService: ReclamationService,
     private cdr: ChangeDetectorRef,
@@ -30,7 +32,6 @@ export class MesReclamations implements OnInit {
     }
 
     this.client = JSON.parse(connectedClient);
-
     this.loadReclamations();
   }
 
@@ -48,17 +49,27 @@ export class MesReclamations implements OnInit {
     });
   }
 
-  deleteReclamation(id: number): void {
-    if (confirm('Voulez-vous supprimer cette réclamation ?')) {
-      this.reclamationService.delete(id).subscribe({
-        next: () => {
-          this.loadReclamations();
-        },
-        error: () => {
-          this.error = 'Erreur lors de la suppression';
-          this.cdr.detectChanges();
-        },
-      });
-    }
+  confirmDeleteReclamation(reclamation: any): void {
+    this.reclamationToDelete = reclamation;
+  }
+
+  deleteReclamation(): void {
+    if (!this.reclamationToDelete?.id) return;
+
+    this.reclamationService.delete(this.reclamationToDelete.id).subscribe({
+      next: () => {
+        this.loadReclamations();
+        this.cancelDelete();
+      },
+      error: () => {
+        this.error = 'Erreur lors de la suppression';
+        this.cancelDelete();
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  cancelDelete(): void {
+    this.reclamationToDelete = undefined;
   }
 }
