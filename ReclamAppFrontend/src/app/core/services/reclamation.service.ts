@@ -6,7 +6,7 @@ import { Reclamation, StatutReclamation } from '../models/reclamation.model';
 @Injectable({ providedIn: 'root' })
 export class ReclamationService {
 
-  private url = 'http://localhost:9090/api/reclamations';
+  private url = 'https://reclamapp-backend-47755772899.us-central1.run.app/api/reclamations';
 
   constructor(private http: HttpClient) {}
 

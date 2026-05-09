@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RapportService {
-  private url = 'http://localhost:9090/api/reclamations/rapport';
+  private url = 'https://reclamapp-backend-47755772899.us-central1.run.app/api/reclamations/rapport';
 
   constructor(private http: HttpClient) {}
 

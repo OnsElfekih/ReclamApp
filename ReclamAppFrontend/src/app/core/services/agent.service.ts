@@ -5,7 +5,7 @@ import { Agent } from '../models/agent.model';
 
 @Injectable({ providedIn: 'root' })
 export class AgentService {
-  private url = 'http://localhost:9090/api/agents';
+  private url = 'https://reclamapp-backend-47755772899.us-central1.run.app/api/agents';
 
   constructor(private http: HttpClient) {}
 

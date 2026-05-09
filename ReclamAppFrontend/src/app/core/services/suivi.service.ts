@@ -5,7 +5,7 @@ import { Suivi } from '../models/suivi.model';
 
 @Injectable({ providedIn: 'root' })
 export class SuiviService {
-  private url = 'http://localhost:9090/api/suivis';
+  private url = 'https://reclamapp-backend-47755772899.us-central1.run.app/api/suivis';
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<Suivi[]> {

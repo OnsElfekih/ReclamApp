@@ -18,7 +18,7 @@ import projet.elfekih.ons.service.ClientService;
 
 @RestController
 @RequestMapping("/api/clients")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "http://localhost:4200", "https://reclamapp-frontend-47755772899.us-central1.run.app" })
 public class ClientController {
 
 	@Autowired

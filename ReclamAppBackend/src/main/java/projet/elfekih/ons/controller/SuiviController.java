@@ -13,7 +13,7 @@ import projet.elfekih.ons.service.SuiviService;
 
 @RestController
 @RequestMapping("/api/suivis")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "http://localhost:4200", "https://reclamapp-frontend-47755772899.us-central1.run.app" })
 public class SuiviController {
 
 	@Autowired

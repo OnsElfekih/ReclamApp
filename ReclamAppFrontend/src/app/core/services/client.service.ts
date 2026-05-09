@@ -5,7 +5,7 @@ import { Client } from '../models/client.model';
 
 @Injectable({ providedIn: 'root' })
 export class ClientService {
-  private url = 'http://localhost:9090/api/clients';
+  private url = 'https://reclamapp-backend-47755772899.us-central1.run.app/api/clients';
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<Client[]> {

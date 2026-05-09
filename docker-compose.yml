@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: reclamapp
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./ReclamAppBackend
+    container_name: reclamapp-backend
+    restart: always
+    depends_on:
+      - mysql-db
+    ports:
+      - "9090:9090"
+
+  frontend:
+    build: ./ReclamAppFrontend
+    container_name: reclamapp-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+
+volumes:
+  mysql_data:
