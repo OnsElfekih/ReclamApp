@@ -17,6 +17,18 @@ Ce projet a été réalisé dans le cadre d’un projet JEE Full Stack.
 
 ---
 
+# Déploiement de l’application
+
+## Frontend déployé
+
+Application disponible sur :
+
+```bash
+https://reclamapp-frontend-47755772899.us-central1.run.app
+```
+
+---
+
 # Fonctionnalités
 
 ## Gestion des clients
@@ -315,16 +327,18 @@ services:
 # Déploiement
 
 ## Frontend Angular
-Le frontend peut être déployé sur :
-- Vercel
-- Netlify
-- Firebase Hosting
+Déployé sur Google Cloud Run.
+
+Lien :
+```bash
+https://reclamapp-frontend-47755772899.us-central1.run.app
+```
 
 ## Backend Spring Boot
-Le backend peut être déployé sur :
+Compatible avec :
+- Google Cloud Run
 - Render
 - Railway
-- Google Cloud Run
 
 ---
 
