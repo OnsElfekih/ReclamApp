@@ -293,8 +293,7 @@ docker run -p 9090:9090 reclamapp-backend
 
 ---
 
-# Docker Compose (optionnel)
-
+# Docker Compose 
 ## docker-compose.yml
 
 ```yaml
@@ -342,12 +341,7 @@ Compatible avec :
 
 ---
 
-# Auteur
+## 👥 Author
 
-Ons Elfekih
-
----
-
-# Repository GitHub
-
-https://github.com/OnsElfekih/ReclamApp
+**Ons ELFEKIH**  
+Business Intelligence Engineering Student
