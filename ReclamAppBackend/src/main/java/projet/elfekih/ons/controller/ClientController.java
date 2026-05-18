@@ -1,16 +1,20 @@
 package projet.elfekih.ons.controller;
 
 import java.util.List;
+//pour retourner une réponse login avec role, message, client
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+//Active la validation des DTO
 import jakarta.validation.Valid;
+//DTO client envoyé au frontend
 import projet.elfekih.ons.dto.ClientDTO;
+//DTO client reçu depuis le frontend
 import projet.elfekih.ons.dto.ClientRequestDTO;
+//DTO login reçu depuis le frontend
 import projet.elfekih.ons.dto.LoginDTO;
 import projet.elfekih.ons.entities.Client;
 import projet.elfekih.ons.mapper.ClientMapper;
@@ -18,9 +22,10 @@ import projet.elfekih.ons.service.ClientService;
 
 @RestController
 @RequestMapping("/api/clients")
+//Autorise Angular local et Angular déployé
 @CrossOrigin(origins = { "http://localhost:4200", "https://reclamapp-frontend-47755772899.us-central1.run.app" })
 public class ClientController {
-
+	// Injection du service client
 	@Autowired
 	private ClientService clientService;
 

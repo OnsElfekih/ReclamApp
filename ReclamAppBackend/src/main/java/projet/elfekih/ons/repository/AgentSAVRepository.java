@@ -8,4 +8,6 @@ public interface AgentSAVRepository extends JpaRepository<AgentSAV, Long> {
 	List<AgentSAV> findByCompetenceContainingIgnoreCase(String competence);
 
 	List<AgentSAV> findByNomContainingIgnoreCase(String nom);
+	
+//JpaRepository<AgentSAV, Long>: crée find,save,delete...
 }

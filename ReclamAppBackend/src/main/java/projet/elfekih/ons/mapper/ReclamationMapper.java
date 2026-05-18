@@ -4,6 +4,7 @@ import projet.elfekih.ons.dto.ReclamationDTO;
 import projet.elfekih.ons.dto.ReclamationRequestDTO;
 import projet.elfekih.ons.entities.Reclamation;
 
+//le mapper le plus important
 public class ReclamationMapper {
 
 	public static ReclamationDTO toDTO(Reclamation reclamation) {
@@ -16,7 +17,7 @@ public class ReclamationMapper {
 		dto.setStatut(reclamation.getStatut());
 		dto.setDate(reclamation.getDate());
 		dto.setNote(reclamation.getNote());
-
+//on evite NullPointerException
 		if (reclamation.getClient() != null) {
 			dto.setClientId(reclamation.getClient().getId());
 			dto.setClientNom(reclamation.getClient().getNom());

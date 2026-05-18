@@ -1,5 +1,5 @@
 package projet.elfekih.ons.service;
-
+//Import LinkedHashMap pour garder l'ordre d'insertion
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +68,7 @@ public class ReclamationService {
 		Reclamation reclamation = ReclamationMapper.toEntity(dto);
 
 		reclamation.setClient(client);
+		// Statut initial automatique
 		reclamation.setStatut(StatutReclamation.OUVERTE);
 		reclamation.setDate(java.time.LocalDate.now());
 
@@ -140,12 +141,12 @@ public class ReclamationService {
 			);
 		}
 	}
-
+// car le rapport contient des types de données diff
 	public Map<String, Object> getRapport() {
 		Double moyenne = reclamationRepository.findAverageNote();
 		Long total = reclamationRepository.count();
 		List<Object[]> parStatutRaw = reclamationRepository.countByStatut();
-
+		//linkedHashMap pour garder l'ordre d'insertion des statuts
 		Map<String, Long> parStatut = new LinkedHashMap<>();
 
 		for (Object[] row : parStatutRaw) {

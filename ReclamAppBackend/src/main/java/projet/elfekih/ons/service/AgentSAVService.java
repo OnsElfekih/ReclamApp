@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+//DTO envoyé au frontend
 import projet.elfekih.ons.dto.AgentSAVDTO;
+//DTO reçu depuis le frontend
 import projet.elfekih.ons.dto.AgentSAVRequestDTO;
 import projet.elfekih.ons.entities.AgentSAV;
+//Mapper pour convertir AgentSAV ↔ AgentSAVDTO
 import projet.elfekih.ons.mapper.AgentSAVMapper;
 import projet.elfekih.ons.repository.AgentSAVRepository;
 import projet.elfekih.ons.dto.ReclamationDTO;
@@ -17,7 +19,7 @@ import projet.elfekih.ons.mapper.ReclamationMapper;
 
 @Service
 public class AgentSAVService {
-
+	// Injection du repository AgentSAV pour accéder à la base de données
 	@Autowired
 	private AgentSAVRepository agentRepository;
 

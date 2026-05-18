@@ -19,13 +19,13 @@ import projet.elfekih.ons.repository.SuiviReclamationRepository;
 
 @Service
 public class SuiviService {
-
+	// Repository pour gérer les suivis
 	@Autowired
 	private SuiviReclamationRepository suiviRepository;
-
+	// Repository pour vérifier la réclamation
 	@Autowired
 	private ReclamationRepository reclamationRepository;
-
+	// Repository pour vérifier l'agent
 	@Autowired
 	private AgentSAVRepository agentRepository;
 

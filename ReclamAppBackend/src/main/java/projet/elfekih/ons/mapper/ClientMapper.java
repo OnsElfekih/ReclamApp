@@ -9,7 +9,7 @@ public class ClientMapper {
 	public static ClientDTO toDTO(Client client) {
 
 		ClientDTO dto = new ClientDTO();
-
+		 // Copie id
 		dto.setId(client.getId());
 		dto.setNom(client.getNom());
 		dto.setEmail(client.getEmail());
